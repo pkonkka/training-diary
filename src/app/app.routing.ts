@@ -11,6 +11,9 @@ import { CATEGORY_ROUTES } from './categories/categories.routes';
 import { TestComponent } from './test/test.component';
 import { ExerciseListComponent } from './exercises/exercise-list/exercise-list.component';
 
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 const APP_ROUTES: Routes = [
     { 
@@ -40,6 +43,14 @@ const APP_ROUTES: Routes = [
         component: CategoriesComponent,
         children: CATEGORY_ROUTES
     },
+    {
+        path: 'register',
+        component: RegisterComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },    
     {
         path: '**',                     // fallback route:
         redirectTo: 'workouts',

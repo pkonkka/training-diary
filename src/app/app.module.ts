@@ -17,6 +17,7 @@ import { WorkoutDetailComponent } from './workouts/workout-detail/workout-detail
 import { ExercisesComponent } from './exercises/exercises.component';
 import { DropdownDirective } from './dropdown.directive';
 
+import { AuthService } from './shared/security/auth.service';
 import { LogService } from './log.service';
 import { WorkoutService } from './shared/model/workout.service';
 import { ExerciseService } from './shared/model/exercise.service';
@@ -42,6 +43,8 @@ import { CategoryDetailComponent } from './categories/category-detail/category-d
 import { CanWorkoutEditDeactivate } from './workouts/workout-edit/workout-edit-deactivate.guard';
 import { CanWorkoutEditActivate } from './workouts/workout-edit/workout-edit-activate.guard';
 import { TestComponent } from './test/test.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -69,6 +72,8 @@ import { TestComponent } from './test/test.component';
     CategoryEditComponent,
     CategoryDetailComponent,
     TestComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,13 +81,14 @@ import { TestComponent } from './test/test.component';
     ReactiveFormsModule,
     HttpModule,
     routing,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, authConfig)
   ],
   providers: [
     LogService, 
     WorkoutService, 
     ExerciseService, 
     CategoryService, 
+    AuthService,
     ValidationService, 
     CanWorkoutEditDeactivate, 
     CanWorkoutEditActivate],
