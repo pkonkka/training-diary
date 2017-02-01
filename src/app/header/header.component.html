@@ -17,9 +17,10 @@
         <li routerLinkActive="menu-active"><a [routerLink]="['/workouts']">Workouts</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/exercises']">Exercises</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/categories']">Categories</a></li>        
-        <li routerLinkActive="menu-active"><a [routerLink]="['/login']">Login</a></li>        
-        <li routerLinkActive="menu-active"><a [routerLink]="['/register']">Register</a></li>        
-        <li routerLinkActive="menu-active"><a [routerLink]="['/logout']">Logout</a></li>        
+        <li routerLinkActive="menu-active"><a [routerLink]="['/login']" *ngIf="!authInfo?.isLoggedIn()">Login</a></li>        
+        <li routerLinkActive="menu-active"><a [routerLink]="['/register']" *ngIf="!authInfo?.isLoggedIn()">Register</a></li>        
+        <!--<li routerLinkActive="menu-active"><a [routerLink]="['/logout']">Logout</a></li>        -->
+        <li><a *ngIf="authInfo?.isLoggedIn()" (click)="logout()">Logout</a></li>
         
       </ul>
       <!--<ul class="nav navbar-nav navbar-right">

@@ -40,6 +40,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryEditComponent } from './categories/category-edit/category-edit.component';
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
 
+import { AuthGuard } from './shared/security/auth.guard';
 import { CanWorkoutEditDeactivate } from './workouts/workout-edit/workout-edit-deactivate.guard';
 import { CanWorkoutEditActivate } from './workouts/workout-edit/workout-edit-activate.guard';
 import { TestComponent } from './test/test.component';
@@ -90,7 +91,7 @@ import { RegisterComponent } from './register/register.component';
     CategoryService, 
     AuthService,
     ValidationService, 
-    CanWorkoutEditDeactivate, 
+    AuthGuard,
     CanWorkoutEditActivate],
   bootstrap: [AppComponent]
 })

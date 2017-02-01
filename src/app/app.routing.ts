@@ -14,6 +14,8 @@ import { ExerciseListComponent } from './exercises/exercise-list/exercise-list.c
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
+import { AuthGuard } from './shared/security/auth.guard';
+
 
 const APP_ROUTES: Routes = [
     { 
@@ -41,7 +43,8 @@ const APP_ROUTES: Routes = [
     { 
         path: 'categories',
         component: CategoriesComponent,
-        children: CATEGORY_ROUTES
+        children: CATEGORY_ROUTES,
+        canActivate: [AuthGuard]
     },
     {
         path: 'register',
