@@ -1,0 +1,6 @@
+
+<a [routerLink]="['/exercises/' + exercise.url]" [queryParams]="{name: exercise.name}" class="list-group-item clearfix" routerLinkActive="active"> 
+  <div class="pull-left">
+    <h5 class="list-group-item-heading">{{exercise?.name}}</h5>
+  </div>
+</a>

@@ -1,0 +1,21 @@
+
+<div class="container-fluid">
+  <h3>{{workoutName}}</h3>
+
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-success" (click)="onAddExercise()"><i class="fa fa-plus" aria-hidden="true"></i> New Exercise</button>                  
+    <button type="button" class="btn btn-primary" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>              
+    <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"> Cancel</i></button>
+  </div>
+    
+  <ul class="list-group">
+    <app-exercise-item *ngFor="let exercise of workoutExercises" [exercise]="exercise"></app-exercise-item>      
+  </ul>
+
+  <div *ngIf="!workoutExercises && i" class="alert alert-info" role="alert">
+    <p>No exercises in this workout.</p>
+  </div>
+
+</div>
+
+

@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
-import * as _ from 'lodash';
+
+import { WorkoutService } from './shared/model/workout.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [WorkoutService]
 })
 export class AppComponent {
-  title = 'app works!';
-
-  constructor() {
-
-
-    console.log(_.now());
-
-  }  
-
 }

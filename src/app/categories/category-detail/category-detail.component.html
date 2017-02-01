@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  
+  <h3>{{categoryName}}</h3>
+
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-primary" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+    <button type="button"  class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+  </div>
+
+  <ul class="list-group">
+    <app-exercise-item *ngFor="let exercise of categoryExercises" [exercise]="exercise"></app-exercise-item>
+  </ul>
+
+
+</div>

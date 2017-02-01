@@ -1,0 +1,34 @@
+<div class="container-fluid">
+
+  <div *ngIf="isNew == 1">
+    <h3>New Cateogory</h3>
+  </div>
+  <div *ngIf="isNew == 0">
+    <h3>Edit Category</h3>
+  </div>
+
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name">
+      <div class="alert alert-danger" 
+        *ngIf="categoryForm.controls.name?.dirty && categoryForm.controls.name?.errors?.required">field is mandatory
+      </div>                  
+    </div>
+
+    <div class="form-group">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="submit" class="btn btn-primary" [disabled]="!categoryForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+        <button type="button" class="btn btn-danger" (click)="onRemove()"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
+        <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+      </div>          
+    </div>
+  </form>
+
+</div>
