@@ -1,8 +1,17 @@
 .btn {
-    margin-bottom: 10px;
+    margin-top: 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
-h3, p {
+h3, label {
     color: lightgray;
+}
+
+.form-control.ng-dirty.ng-invalid {
+    border: 1px solid #ff2118;
+}
+
+.field-error-message {
+    color: #ff2118;
 }

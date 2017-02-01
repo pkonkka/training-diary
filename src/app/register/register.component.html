@@ -1,22 +1,28 @@
-<form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+<div class="container-fluid" style="width: 50%;">
 
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
+  <h3>Register</h3>
+
+  <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+  
+    <div class="form-group">
       <label>Email:</label>
-      <input name="email" formControlName="email">
+      <input class="form-control" name="email" formControlName="email">
     </div>
-    <div class="form-field">
+
+    <div class="form-group">
       <label>Password:</label>
-      <input name="password" formControlName="password" type="password">
+      <input class="form-control" name="password" formControlName="password" type="password">
     </div>
-    <div class="form-field">
+
+    <div class="form-group">
       <label>Confirm Password:</label>
-      <input name="confirm" formControlName="confirm" type="password">
+      <input class="form-control" name="confirm" formControlName="confirm" type="password">
     </div>
     
-  </fieldset>
+    <div class="form-group">
+      <button type="button" class="btn btn-success" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
+    </div>
 
-  <button (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
+  </form>
 
-</form>
+</div>

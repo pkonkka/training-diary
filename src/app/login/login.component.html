@@ -1,18 +1,32 @@
-<form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+<div class="container-fluid" style="width: 50%;">
 
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email">
+  <h3>Login</h3>
+
+  <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+
+    <!--<fieldset>-->
+    
+      <!--<legend>Login</legend>-->
+
+      <div class="form-group">
+        <label>Email:</label>
+        <input class="form-control" name="email" formControlName="email">
+      </div>
+
+      <div class="form-group">
+        <label>Password:</label>
+        <input class="form-control" name="password" formControlName="password">
+      </div>
+
+    <!--</fieldset>-->
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" (click)="login()">Login</button>
     </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" formControlName="password">
-    </div>
-  </fieldset>
 
-  <button (click)="login()">Login</button>
+  </form>
 
-</form>
+</div>
+
+
 
