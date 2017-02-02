@@ -23,7 +23,7 @@ export class RegisterComponent {
       const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
       this.form = this.fb.group({
         email:    ['', Validators.pattern(emailRegex)],
-        password: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         confirm:  ['', Validators.required]
       });
 

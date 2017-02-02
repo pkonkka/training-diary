@@ -17,6 +17,11 @@
     <div class="form-group">
       <label>Password:</label>
       <input class="form-control" name="password" formControlName="password" type="password">
+
+      <div class="alert alert-danger" 
+        *ngIf="form.controls.password?.dirty && form.controls.password?.errors?.minlength">Password must be at least 8 characters long.
+      </div>                
+      
     </div>
 
     <div class="form-group">
@@ -24,6 +29,7 @@
       <input class="form-control" name="confirm" formControlName="confirm" type="password">
     </div>
     
+    <p>I already have an account! <a [routerLink]="['/login']">Login</a> here.</p>
     
     <div class="form-group">
       <button type="submit" class="btn btn-primary" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
