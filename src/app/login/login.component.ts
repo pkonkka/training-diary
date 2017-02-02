@@ -17,10 +17,13 @@ export class LoginComponent {
   // ------------------------------------------------------------------------------------------------------------------
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { 
 
+
+    const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     this.form = this.fb.group({
-      email:    ['', Validators.pattern(
-          '/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i')],
+
+      email:    ['', Validators.pattern(emailRegex)],
       password: ['', Validators.required]
+
     });
 
   }
@@ -33,8 +36,14 @@ export class LoginComponent {
 
     this.authService.login(formValue.email, formValue.password)
       .subscribe(
-        () => this.router.navigate(['']),
-        alert
+        () => {
+          console.log('111');
+          this.router.navigate([''])
+        },
+        err => {
+          console.log('Hmmm');
+          alert(err);
+        }        
       );
 
 

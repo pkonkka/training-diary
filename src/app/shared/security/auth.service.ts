@@ -23,10 +23,11 @@ export class AuthService {
    login(email, password): Observable<any> {
     
     // does not work always:
-    //  return Observable.fromPromise(this.auth.login({ email, password }));
+    //  return Observable.fromPromise(this.af.auth.login({ email, password }));
     
     // this should work always:
-    return this.fromFirebaseAuthPromise(this.af.auth.login({ email, password }));
+    const obs = this.af.auth.login({ email, password });
+    return this.fromFirebaseAuthPromise(obs);
 
    }
 
@@ -36,7 +37,7 @@ export class AuthService {
      return this.fromFirebaseAuthPromise(this.af.auth.createUser({email, password}));
    }
 
-
+  // ------------------------------------------------------------------------------------------------
    logout() {
      this.af.auth.logout();
      this.authInfo$.next(AuthService.UNKNOWN_USER);

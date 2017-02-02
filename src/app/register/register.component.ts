@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/security/auth.service';
+import { validatePassword } from './validatePassword';
 
 @Component({
   selector: 'app-register',
@@ -13,19 +14,23 @@ export class RegisterComponent {
 
   form: FormGroup;
 
+  // ---------------------------------------------------------------------------------------------
   constructor(
     private fb: FormBuilder, 
     private authServce: AuthService, 
     private router: Router) {
 
+      const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
       this.form = this.fb.group({
-        email:    ['', Validators.required],
+        email:    ['', Validators.pattern(emailRegex)],
         password: ['', Validators.required],
         confirm:  ['', Validators.required]
       });
 
   }
 
+
+  // ---------------------------------------------------------------------------------------------
   isPasswordMatch() {
 
     const val = this.form.value;
@@ -33,6 +38,8 @@ export class RegisterComponent {
 
   }
 
+
+  // ---------------------------------------------------------------------------------------------
   signUp() {
 
     const val = this.form.value;
@@ -45,9 +52,6 @@ export class RegisterComponent {
         },
         err => alert(err)
       );
-
-
   }
-
 
 }

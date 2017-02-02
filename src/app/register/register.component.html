@@ -1,4 +1,4 @@
-<div class="container-fluid" style="width: 50%;">
+<div class="container-fluid">
 
   <h3>Register</h3>
 
@@ -7,6 +7,11 @@
     <div class="form-group">
       <label>Email:</label>
       <input class="form-control" name="email" formControlName="email">
+        
+      <div class="alert alert-danger" 
+        *ngIf="form.controls.email?.dirty && form.controls.email?.errors?.pattern">Email format is incorrect.
+      </div>                
+      
     </div>
 
     <div class="form-group">
@@ -19,8 +24,9 @@
       <input class="form-control" name="confirm" formControlName="confirm" type="password">
     </div>
     
+    
     <div class="form-group">
-      <button type="button" class="btn btn-success" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
+      <button type="submit" class="btn btn-primary" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
     </div>
 
   </form>

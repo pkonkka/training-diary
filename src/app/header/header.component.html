@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" [routerLink]="['/']">Gym Log</a>
+      <a class="navbar-brand" [routerLink]="['/']">Training Diary</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,7 +18,7 @@
         <li routerLinkActive="menu-active"><a [routerLink]="['/exercises']">Exercises</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/categories']">Categories</a></li>        
         <li routerLinkActive="menu-active"><a [routerLink]="['/login']" *ngIf="!authInfo?.isLoggedIn()">Login</a></li>        
-        <li routerLinkActive="menu-active"><a [routerLink]="['/register']" *ngIf="!authInfo?.isLoggedIn()">Register</a></li>        
+        <!--<li routerLinkActive="menu-active"><a [routerLink]="['/register']" *ngIf="!authInfo?.isLoggedIn()">Register</a></li>        -->
         <!--<li routerLinkActive="menu-active"><a [routerLink]="['/logout']">Logout</a></li>        -->
         <li><a *ngIf="authInfo?.isLoggedIn()" (click)="logout()">Logout</a></li>
         

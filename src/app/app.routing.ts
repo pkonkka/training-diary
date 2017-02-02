@@ -21,12 +21,14 @@ const APP_ROUTES: Routes = [
     { 
         path: '',
         redirectTo: 'workouts',
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [AuthGuard]                 
     },
     { 
         path: 'workouts',
         component: WorkoutsComponent, 
-        children: WORKOUT_ROUTES 
+        children: WORKOUT_ROUTES,
+        canActivate: [AuthGuard]         
     },
 
     // { 
@@ -38,7 +40,8 @@ const APP_ROUTES: Routes = [
     { 
         path: 'exercises',
         component: ExercisesComponent,
-        children: EXERCISE_ROUTES
+        children: EXERCISE_ROUTES,
+        canActivate: [AuthGuard]        
     },
     { 
         path: 'categories',
