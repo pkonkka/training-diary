@@ -23,13 +23,14 @@ export class HeaderComponent implements OnInit {
 
     this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
 
+
   }
 
   // ------------------------------------------------------------------------
   logout() {
+
     this.authService.logout();
     this.router.navigate(['/login']);
-
   }
 
 }

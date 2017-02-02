@@ -37,13 +37,11 @@ export class LoginComponent {
     this.authService.login(formValue.email, formValue.password)
       .subscribe(
         () => {
-          console.log('111');
           this.router.navigate([''])
         },
         err => {
-          console.log('Hmmm');
           alert(err);
-        }        
+        }
       );
 
 

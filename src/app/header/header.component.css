@@ -17,3 +17,7 @@ li > a.menu-active {
     color: green;
     font-weight: bold;
 }
+
+.dropdown  {
+    color: black;
+}

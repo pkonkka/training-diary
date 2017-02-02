@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs/Rx';
+import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs/Rx';
 import { AngularFire, AuthMethods, AuthProviders } from 'angularfire2';
 
 import { AuthInfo } from './auth-info';
@@ -7,7 +7,9 @@ import { AuthInfo } from './auth-info';
 @Injectable()
 export class AuthService {
 
-  static UNKNOWN_USER = new AuthInfo(null);
+  authSub: Subscription;
+
+  static UNKNOWN_USER = new AuthInfo(null, null);
 
   authInfo$: BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AuthService.UNKNOWN_USER);
 
@@ -33,14 +35,15 @@ export class AuthService {
 
 
   // ------------------------------------------------------------------------------------------------
-   signUp(email, password) {
-     return this.fromFirebaseAuthPromise(this.af.auth.createUser({email, password}));
-   }
+  signUp(email, password) {
+    return this.fromFirebaseAuthPromise(this.af.auth.createUser({email, password}));
+  }
 
   // ------------------------------------------------------------------------------------------------
    logout() {
      this.af.auth.logout();
      this.authInfo$.next(AuthService.UNKNOWN_USER);
+     if (this.authSub) { this.authSub.unsubscribe(); }
    }
 
   // ------------------------------------------------------------------------------------------------
@@ -50,10 +53,24 @@ export class AuthService {
 
      promise 
       .then(res => {
-        const authInfo = new AuthInfo(this.af.auth.getAuth().uid);
-        this.authInfo$.next(authInfo);
-        subject.next(res);
-        subject.complete();
+        let authInfo;
+
+        // const authInfo = new AuthInfo(this.af.auth.getAuth().uid, this.af.auth.getAuth().auth.email);
+        // this.authInfo$.next(authInfo);
+        // subject.next(res);
+        // subject.complete();
+        
+        this.authSub = this.af.auth.subscribe(
+          auth => {
+            if (auth) {
+              authInfo = new AuthInfo(auth.uid, auth.auth.email);
+              this.authInfo$.next(authInfo);
+              subject.next(res);
+              subject.complete();
+            }
+          }
+        )
+        
       },
       err => {
         this.authInfo$.error(err);
