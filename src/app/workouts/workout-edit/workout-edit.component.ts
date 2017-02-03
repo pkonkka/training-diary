@@ -42,6 +42,8 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------
   ngOnInit() {
 
+    console.log('ONINIT');
+
     this.workoutForm = this.formBuilder.group({
        name: [''],
        description: [''],
@@ -103,12 +105,15 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
 
   // ---------------------------------------------------------------------------------
   ngOnDestroy() {
+    console.log('OnDestroy 1');    
     this.paramsSub.unsubscribe();
     if (this.workoutSub) { this.workoutSub.unsubscribe(); }
+    console.log('OnDestroy 2');
   }
 
   // ---------------------------------------------------------------------------------
   private navigateBack() {
+    console.log('NAVIGATEBACK');
     this.location.back();
   }
 

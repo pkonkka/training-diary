@@ -15,8 +15,8 @@ export const WORKOUT_ROUTES: Routes = [
     { 
         path: 'new',      
         component: WorkoutEditComponent,
-        canActivate: [CanWorkoutEditActivate], 
-        canDeactivate: [CanWorkoutEditDeactivate],
+        // canActivate: [CanWorkoutEditActivate], 
+        // canDeactivate: [CanWorkoutEditDeactivate],
     },
     { 
         path: ':id',      

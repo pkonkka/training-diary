@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router'; 
 
 import { AuthService } from '../shared/security/auth.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,16 @@ export class LoginComponent {
   // ------------------------------------------------------------------------------------------------------------------
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { 
 
+    let email;
+
+    if (Cookie.get('email')) {
+      email = Cookie.get('email');
+    }
 
     const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     this.form = this.fb.group({
 
-      email:    ['', Validators.pattern(emailRegex)],
+      email:    [email, Validators.pattern(emailRegex)],
       password: ['', Validators.required]
 
     });
@@ -37,7 +43,8 @@ export class LoginComponent {
     this.authService.login(formValue.email, formValue.password)
       .subscribe(
         () => {
-          this.router.navigate([''])
+          this.router.navigate(['']);
+          Cookie.set('email', formValue.email);
         },
         err => {
           alert(err);
