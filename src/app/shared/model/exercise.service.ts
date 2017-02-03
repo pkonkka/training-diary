@@ -7,16 +7,25 @@ import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 import { Category } from './category';
 import { Exercise } from './exercise';
 
+import { AuthService } from '../security/auth.service';
+import { AuthInfo } from '../security/auth-info';
 
 @Injectable()
 export class ExerciseService {
 
     private exercises$: FirebaseListObservable<Exercise[]>;
+    private authInfo: AuthInfo;
+    private userUrl;
+    private exerciseUrl;
 
     // -------------------------------------------------------------------------------------------------
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFireDatabase, private authService: AuthService) {
 
-        this.exercises$ = this.db.list('exercises');
+        this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
+        this.userUrl = 'users/' + this.authInfo.$uid + '/';
+        this.exerciseUrl = this.userUrl + 'exercises';
+
+        this.exercises$ = this.db.list(this.exerciseUrl);
         
     }
 
@@ -35,7 +44,7 @@ export class ExerciseService {
     // Find an exercise by an excerise url
     // -------------------------------------------------------------------------------------------------
     findExerciseByUrl(exerciseUrl: string): Observable<Exercise> {
-        return this.db.list('exercises', {
+        return this.db.list(this.exerciseUrl, {
             query: {
                 orderByChild: 'url',
                 equalTo: exerciseUrl
@@ -49,7 +58,7 @@ export class ExerciseService {
     // Find an category by category url
     // -------------------------------------------------------------------------------------------------
     findCategoryByUrl(categoryUrl: string): Observable<Category> {
-        return this.db.list('categories', {
+        return this.db.list(this.userUrl + 'categories', {
             query: {
                 orderByChild: 'url',
                 equalTo: categoryUrl
@@ -73,7 +82,7 @@ export class ExerciseService {
         return this.findCategoryByUrl(categoryUrl)
             // .do(val => console.log('category', val))
             .filter(category => !!category)
-            .switchMap(category => this.db.list(`exercisesPerCategory/${category.$key}`, query))
+            .switchMap(category => this.db.list(`${this.userUrl}/exercisesPerCategory/${category.$key}`, query))
             .map( lspc => lspc.map(lpc => lpc.$key) );
 
     }
@@ -84,7 +93,7 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------
     findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
         return exerciseKeys$
-            .map(lspc => lspc.map(exerciseKey => this.db.object('exercises/' + exerciseKey)) )
+            .map(lspc => lspc.map(exerciseKey => this.db.object(this.exerciseUrl + exerciseKey)) )
             .flatMap(fbojs => Observable.combineLatest(fbojs) );
 
     }
@@ -106,7 +115,7 @@ export class ExerciseService {
     removeExercise(exercise: Exercise): firebase.Promise<any> {
 
         
-        return this.db.list('exercises').remove(exercise.$key);
+        return this.db.list(this.exerciseUrl).remove(exercise.$key);
 
 
         // return this.exercises$.remove(exercise.$key);

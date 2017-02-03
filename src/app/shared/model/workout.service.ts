@@ -10,16 +10,27 @@ import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
 import { Workout } from './workout';
 import { Exercise } from './exercise';
+import { AuthService } from '../security/auth.service';
+import { AuthInfo } from '../security/auth-info';
 
 @Injectable()
 export class WorkoutService {
 
+
     private workouts$: FirebaseListObservable<Workout[]>;
+    private authInfo: AuthInfo;
+    private userUrl;
+    private workoutUrl;
 
     // -------------------------------------------------------------------------------------------------
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFireDatabase, private authService: AuthService) {
 
-        this.workouts$ = this.db.list('workouts');
+        this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
+
+        this.userUrl = 'users/' + this.authInfo.$uid + '/';
+        this.workoutUrl = this.userUrl + 'workouts';
+
+        this.workouts$ = this.db.list(this.workoutUrl);
 
     }
 
@@ -39,7 +50,7 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------    
     loadFirstWorkoutsPage(pageSize = 5): Observable<Workout[]> {
 
-        this.workouts$ = this.db.list('workouts', {
+        this.workouts$ = this.db.list(this.workoutUrl, {
             query: {
                 orderByChild: 'url',
                 limitToFirst: pageSize
@@ -54,13 +65,12 @@ export class WorkoutService {
     //  Get a workout by an url
     // -------------------------------------------------------------------------------------------------    
     findWorkoutByUrl(workoutUrl: string): Observable<Workout> {
-        return this.db.list('workouts', {
+        return this.db.list(this.workoutUrl, {
             query: {
                 orderByChild: 'url',
                 equalTo: workoutUrl
             }
         })
-        .do(val => console.log('workout service: ', val))
         .map(results => results[0])
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -74,7 +84,7 @@ export class WorkoutService {
         return this.findWorkoutByUrl(workoutUrl)
             // .do(val => console.log('workout', val))
             .filter(workout => !!workout)
-            .switchMap(workout => this.db.list(`exercisesPerWorkout/${workout.$key}`, query))
+            .switchMap(workout => this.db.list(`${this.userUrl}/exercisesPerWorkout/${workout.$key}`, query))
             .map( lspc => lspc.map(lpc => lpc.$key) );
 
     }
@@ -84,7 +94,7 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------    
     findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
         return exerciseKeys$
-            .map(lspc => lspc.map(exerciseKey => this.db.object('exercises/' + exerciseKey)) )
+            .map(lspc => lspc.map(exerciseKey => this.db.object(this.userUrl + 'exercises/' + exerciseKey)) )
             .flatMap(fbojs => Observable.combineLatest(fbojs) );
 
     }
@@ -170,8 +180,8 @@ export class WorkoutService {
     //  Remove a workout from the database
     // -------------------------------------------------------------------------------------------------    
     removeWorkout(workout: Workout): firebase.Promise<any> {
-        let item = this.db.list(`exercisesPerWorkout/${workout.$key}`);
-        item.remove();
+        // let item = this.db.list(`exercisesPerWorkout/${workout.$key}`);
+        // item.remove();
 
         return this.workouts$.remove(workout.$key);
     }

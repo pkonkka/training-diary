@@ -3,6 +3,14 @@
 //  Seed data for the Firebase database. Execution: npm run populate-db
 //
 //
+export const dbDataUsers = {
+  "users": [
+    {
+      "uid": "J4DoRW0fzvgCa111v7qPGmWyzEn2"
+    }
+  ]
+}
+
 
 export const dbDataExercises = {
   "exercises": [

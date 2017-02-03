@@ -7,7 +7,7 @@
 
 import { database, initializeApp } from 'firebase';
 import { firebaseConfig } from './src/environments/firebase.config';
-import { dbDataExercises, dbDataWorkouts, dbDataCategories } from './db-data';
+import { dbDataExercises, dbDataWorkouts, dbDataCategories, dbDataUsers } from './db-data';
 
 
 console.log('Initizalizing Firebase database ... ');
@@ -15,9 +15,28 @@ console.log('Initizalizing Firebase database ... ');
 initializeApp(firebaseConfig);
 
 
-const workoutsRef = database().ref('workouts');
-const exercisesRef = database().ref('exercises');
-const categoriesRef = database().ref('categories');
+const usersRef = database().ref('users');
+
+// ------------------------------------------------------------
+// add an user item to the database
+// ------------------------------------------------------------
+let userKeys = [];
+let userIdRef;
+
+dbDataUsers.users.forEach( user => {
+  console.log('adding user', user.uid);
+
+  // userKeys.push(usersRef.push({
+  //   uid: user.uid
+  // }));
+  userIdRef = usersRef.child(user.uid);
+});
+console.log('userKeys: ' + userKeys);
+
+const workoutsRef = userIdRef.child('workouts');
+const exercisesRef = userIdRef.child('exercises');
+const categoriesRef = userIdRef.child('categories');
+
 
 // ------------------------------------------------------------
 // add workout items to the database
@@ -58,7 +77,7 @@ console.log('exerciseKeys: ' + exerciseKeys);
 // ------------------------------------------------------------
 // add exercise item keys per workout to the database
 // ------------------------------------------------------------
-const association = database().ref('exercisesPerWorkout');
+const association = userIdRef.child('exercisesPerWorkout');
 
 for (let i = 0; i < Number(dbDataWorkouts.workouts.length); i++) {
   for (let j = 0; j < Number(dbDataWorkouts.workouts[i].exercises.length); j++) {
@@ -109,7 +128,7 @@ console.log('categoryKeys: ' + categoryKeys);
 // ------------------------------------------------------------
 // exercises per category
 // ------------------------------------------------------------
-const association2 = database().ref('exercisesPerCategory');
+const association2 = userIdRef.child('exercisesPerCategory');
 
 for (let i = 0; i < Number(dbDataCategories.categories.length); i++) {
 
