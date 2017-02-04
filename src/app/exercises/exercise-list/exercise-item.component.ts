@@ -13,7 +13,6 @@ export class ExerciseItemComponent implements OnInit {
 
   constructor() { 
 
-    console.log('exercise-item created.');
 
   }
 

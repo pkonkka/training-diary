@@ -80,7 +80,6 @@ export class ExerciseService {
                                    query: FirebaseListFactoryOpts = {}): Observable<string[]> {
 
         return this.findCategoryByUrl(categoryUrl)
-            // .do(val => console.log('category', val))
             .filter(category => !!category)
             .switchMap(category => this.db.list(`${this.userUrl}/exercisesPerCategory/${category.$key}`, query))
             .map( lspc => lspc.map(lpc => lpc.$key) );

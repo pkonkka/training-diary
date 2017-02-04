@@ -31,7 +31,6 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   // -----------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
     this.exerciseSub = this.exerciseService.findAllExercises()
-      .do(console.log)
       .subscribe(
         exercises => {
           this.allExercises = this.filtered = exercises

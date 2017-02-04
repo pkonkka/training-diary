@@ -52,7 +52,6 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
 
     if (this.isNew === false) {
       this.categoriesSub = this.categoryService.findCategoryByUrl(this.categoryUrl)
-        .do(console.log)
         .subscribe(
           category => {
             this.category = category;
@@ -72,7 +71,6 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     
     if (this.isNew) {
       this.categoryService.createCategory(newCategory);
-      console.log(newCategory);
     } else {
       this.categoryService.updateCategory(this.category, newCategory);
     }

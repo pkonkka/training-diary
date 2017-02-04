@@ -49,7 +49,6 @@ export class WorkoutDetailComponent implements OnInit, OnDestroy {
 
     this.workoutUrl = this.route.snapshot.params['id'];
     this.exercisesSub = this.workoutService.findAllExercisesForWorkout(this.workoutUrl)
-      .do(console.log)
       .subscribe(
         exercises => {
           this.workoutExercises = exercises;

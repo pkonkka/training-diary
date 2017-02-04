@@ -42,8 +42,6 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------
   ngOnInit() {
 
-    console.log('ONINIT');
-
     this.workoutForm = this.formBuilder.group({
        name: [''],
        description: [''],
@@ -105,15 +103,12 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
 
   // ---------------------------------------------------------------------------------
   ngOnDestroy() {
-    console.log('OnDestroy 1');    
     this.paramsSub.unsubscribe();
     if (this.workoutSub) { this.workoutSub.unsubscribe(); }
-    console.log('OnDestroy 2');
   }
 
   // ---------------------------------------------------------------------------------
   private navigateBack() {
-    console.log('NAVIGATEBACK');
     this.location.back();
   }
 
@@ -148,13 +143,13 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
     });
 
      let testi = new WorkoutNameValidator(this.workoutService);
-     console.log(testi.checkWorkoutName());
+    //  console.log(testi.checkWorkoutName());
     
     // this.workoutForm.valueChanges
     this.workoutForm.valueChanges
       .filter(() => this.workoutForm.valid)
       // .map(value => new Workout(value.$key, value.name, value.description, value.url))
-      .do(formValue => console.log('Valid form value: ', formValue))
+      // .do(formValue => console.log('Valid form value: ', formValue))
       .subscribe();
 
   }

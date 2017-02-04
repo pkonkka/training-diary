@@ -37,7 +37,6 @@ export class ExerciseSubListComponent implements OnInit {
   // -----------------------------------------------------------------------------
   searchExercise(s: string) {
 
-    console.log('sub-list: ', s);
     // this.filtered = this.allExercises.filter(function (exercise) {
     //   let note = exercise.note.toLowerCase();
     //   let name = exercise.name.toLowerCase();

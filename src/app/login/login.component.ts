@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router'; 
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 import { AuthService } from '../shared/security/auth.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { AuthInfo } from '../shared/security/auth-info';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 export class LoginComponent {
 
   form: FormGroup;
+  authInfo: AuthInfo;
 
 
   // ------------------------------------------------------------------------------------------------------------------
@@ -32,6 +34,10 @@ export class LoginComponent {
 
     });
 
+
+    this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
+    
+
   }
 
 
@@ -50,8 +56,14 @@ export class LoginComponent {
           alert(err);
         }
       );
-
-
   }
+
+
+
+  // // ------------------------------------------------------------------------
+  // resetPassword() {
+  //   console.log('resetPassword');
+  //   this.authService.resetPassword(this.authInfo.email);
+  // } 
 
 }

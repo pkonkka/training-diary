@@ -59,7 +59,6 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
 
     if (this.isNew === false) {
       this.exerciseSub = this.exerciseService.findExerciseByUrl(this.exerciseUrl)
-        .do(console.log)
         .subscribe(
           exercise => {
             this.exercise = exercise;
@@ -109,7 +108,6 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
     // let workoutExercises: FormArray = new FormArray([]);
 
      if  (!this.isNew && this.exercise) {
-       console.log('>>>>: ', this.exercise.name);
 
   //     if (this.workout.hasOwnProperty('exercises')) {
   //       for (let i = 0; i < this.workout.exercises.length; i++) {
