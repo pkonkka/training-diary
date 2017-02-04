@@ -5,11 +5,13 @@ export class Workout {
         public $key: string,        
         public name: string, 
         public description: string,
-        public url: string) {
+        public url: string,
+        public createdAt: string,
+        public modifiedAt: string) {
         }
 
-        static fromJson({$key, name, description, url}): Workout {
-            return new Workout($key, name, description, url);
+        static fromJson({$key, name, description, url, createdAt, modifiedAt}): Workout {
+            return new Workout($key, name, description, url, createdAt, modifiedAt);
         }
 
         static fromJsonArray(json: any[]): Workout[] {

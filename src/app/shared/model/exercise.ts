@@ -7,17 +7,21 @@ export class Exercise {
         public name: string, 
         public note: string, 
         public url: string,
-        public workoutId: string) {
+        public workoutId: string,
+        public createdAt: string,
+        public modifiedAt: string) {
 
         }
 
-    static fromJson({$key, name, note, url, workoutId}): Exercise {
+    static fromJson({$key, name, note, url, workoutId, createdAt, modifiedAt}): Exercise {
         return new Exercise(
             $key,
             name,
             note,
             url,
-            workoutId
+            workoutId,
+            createdAt,
+            modifiedAt
         );
     }
 

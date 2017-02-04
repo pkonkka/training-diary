@@ -8,6 +8,7 @@
 import { database, initializeApp } from 'firebase';
 import { firebaseConfig } from './src/environments/firebase.config';
 import { dbDataExercises, dbDataWorkouts, dbDataCategories, dbDataUsers } from './db-data';
+import * as _ from 'lodash';
 
 
 console.log('Initizalizing Firebase database ... ');
@@ -48,9 +49,11 @@ dbDataWorkouts.workouts.forEach( workout => {
   console.log('adding workout', workout.url);
 
   workoutKeys.push(workoutsRef.push({
-      name: workout.name,
-      description: workout.description,
-      url: workout.url,
+      name:         workout.name,
+      description:  workout.description,
+      url:          workout.url,
+      createdAt:    _.now(),
+      modifiedAt:   _.now()
   }).key);
 });
 
@@ -66,9 +69,11 @@ dbDataExercises.exercises.forEach(exercise =>  {
   console.log('adding exercise ', exercise.url);
 
   exerciseKeys.push(exercisesRef.push({
-      name: exercise.name,
-      note: exercise.note,
-      url: exercise.url
+      name:       exercise.name,
+      note:       exercise.note,
+      url:        exercise.url,
+      createdAt:  _.now(),
+      modifiedAt: _.now()
     }).key);
 });
 
@@ -100,8 +105,10 @@ dbDataCategories.categories.forEach(category =>  {
   console.log('adding category ', category.name);
 
   categoryKeys.push(categoriesRef.push({
-      name: category.name,
-      url: category.url
+      name:       category.name,
+      url:        category.url,
+      createdAt:  _.now(),
+      modifiedAt: _.now()
     }).key);
 });
 

@@ -5,14 +5,18 @@ export class Category {
     constructor(
         public $key,
         public name: string,
-        public url: string) {
+        public url: string,
+        public createdAt: string,
+        public modifiedAt: string) {
         }
 
-    static fromJson({$key, name, url}): Category {
+    static fromJson({$key, name, url, createdAt, modifiedAt}): Category {
         return new Category(
             $key,
             name,
-            url
+            url,
+            createdAt,
+            modifiedAt
         );
     }
 

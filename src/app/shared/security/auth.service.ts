@@ -16,7 +16,8 @@ export class AuthService {
 
   // ------------------------------------------------------------------------------------------------
   constructor(private af: AngularFire) {
-   }
+
+  }
 
 
   // ------------------------------------------------------------------------------------------------
@@ -44,9 +45,9 @@ export class AuthService {
      if (this.authSub) { this.authSub.unsubscribe(); }
    }
 
-  // // ------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------
   // resetPassword(email: string): firebase.Promise<any> {
-  //   return firebase.auth().sendPasswordResetEmail(email);
+  //   // return this.af.auth.
   // }
 
 

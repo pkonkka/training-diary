@@ -29,10 +29,20 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
 
     this.workoutSub = this.workoutService.findAllWorkouts()
       .subscribe( 
-        workouts => this.allWorkouts = this.filtered = workouts
+        workouts => {
+          this.allWorkouts = this.filtered = workouts;
+          this.sortByTime();
+        }
       );
 
   }
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  sortByTime() {
+    this.filtered =  _.sortBy(this.filtered, [function(o) { return o.modifiedAt; }]);
+    this.filtered = _.reverse(this.filtered);
+  }
+
 
   // -----------------------------------------------------------------------------------------------------------------------
   search(search: string) {

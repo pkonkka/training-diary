@@ -33,7 +33,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
     this.exerciseSub = this.exerciseService.findAllExercises()
       .subscribe(
         exercises => {
-          this.allExercises = this.filtered = exercises
+          this.allExercises = this.filtered = exercises;
           this.sortAlphaAsc();
         }
       );
