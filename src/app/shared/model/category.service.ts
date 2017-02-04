@@ -2,6 +2,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
+import * as _ from 'lodash';
+
 import { Category } from './category';
 import { AuthService } from '../security/auth.service';
 import { AuthInfo } from '../security/auth-info';
@@ -53,7 +55,8 @@ export class CategoryService {
   // -------------------------------------------------------------------------------------------------
   //  Create new category item
   // -------------------------------------------------------------------------------------------------    
-  createCategory(data: {}): firebase.Promise<any> {
+  createCategory(data): firebase.Promise<any> {
+    data.modifiedAt = data.createdAt = _.now();
     return this.categories$.push(data);
   }
 
@@ -69,6 +72,7 @@ export class CategoryService {
   //  Update a category
   // -------------------------------------------------------------------------------------------------    
   updateCategory(category: Category, changes: any): firebase.Promise<any> {
+      changes.modifiedAt = _.now();
       return this.categories$.update(category.$key, changes);
   }
 

@@ -83,7 +83,6 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
       this.workoutService.createWorkout(newWorkout);
     } else {
       this.workoutService.updateWorkout(this.workout, newWorkout);
-
     }
     this.navigateBack();
   }

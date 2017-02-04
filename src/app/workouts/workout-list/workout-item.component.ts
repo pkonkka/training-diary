@@ -22,7 +22,7 @@ export class WorkoutItemComponent implements OnInit {
 
   // -----------------------------------------------------------
   toDate(timestamp: string) {
-    return moment(timestamp).format('L');
+    return moment(timestamp);
   }
 
 }

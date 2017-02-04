@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
+import * as _ from 'lodash';
+
 
 import { Category } from './category';
 import { Exercise } from './exercise';
@@ -100,7 +102,8 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------
     //  Create new exercise item
     // -------------------------------------------------------------------------------------------------    
-    createExercise(data: {}): firebase.Promise<any> {
+    createExercise(data): firebase.Promise<any> {
+        data.modifiedAt = data.createdAt = _.now();
         return this.exercises$.push(data);
     }
 
@@ -124,6 +127,7 @@ export class ExerciseService {
     //  Update a exercise
     // -------------------------------------------------------------------------------------------------    
     updateExercise(exercise: Exercise, changes: any): firebase.Promise<any> {
+        changes.modifiedAt = _.now();
         return this.exercises$.update(exercise.$key, changes);
     }
 

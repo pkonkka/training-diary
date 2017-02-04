@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
+import * as _ from 'lodash';
+
 // import 'rxjs/add.operator/map';
 // import 'rxjs/add.operator/do';
 
@@ -167,7 +169,8 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------
     //  Create new workout item
     // -------------------------------------------------------------------------------------------------    
-    createWorkout(data: {}): firebase.Promise<any> {
+    createWorkout(data): firebase.Promise<any> {
+        data.modifiedAt = data.createdAt = _.now();
         return this.workouts$.push(data);
     }
     // createWorkout(data: {}): Observable<Workout> {
@@ -192,7 +195,7 @@ export class WorkoutService {
     //  Update a workout
     // -------------------------------------------------------------------------------------------------    
     updateWorkout(workout: Workout, changes: any): firebase.Promise<any> {
-
+        changes.modifiedAt = _.now();
         return this.workouts$.update(workout.$key, changes);
 
     }
