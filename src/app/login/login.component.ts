@@ -13,8 +13,10 @@ import { AuthInfo } from '../shared/security/auth-info';
 })
 export class LoginComponent {
 
-  form: FormGroup;
-  authInfo: AuthInfo;
+  form:         FormGroup;
+  authInfo:     AuthInfo;
+  
+  loginFailed = false;
 
 
   // ------------------------------------------------------------------------------------------------------------------
@@ -53,7 +55,10 @@ export class LoginComponent {
           Cookie.set('email', formValue.email);
         },
         err => {
-          alert(err);
+          // alert(err);
+          // console.log(err);
+          // this.loginErr = err;
+          this.loginFailed = true;
         }
       );
   }

@@ -27,8 +27,6 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------
     constructor(private db: AngularFireDatabase, private authService: AuthService) {
 
-        console.log('WORKOUTS SERVICE CONSTRUCTOR');
-
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
 
         this.userUrl = 'users/' + this.authInfo.$uid + '/';

@@ -136,8 +136,8 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
      this.workoutForm = this.formBuilder.group({
       //  name: [workoutName, Validators.compose([Validators.required, Validators.maxLength(20), Validators.apply(validateName)])],
       // name: [workoutName, validateName(name, this.workoutService)],
-      name: [workoutName, Validators.required],
-      // name: [workoutName, new WorkoutNameValidator(this.workoutService).checkWorkoutName],
+      // name: [workoutName, Validators.required],
+      name: [workoutName, new WorkoutNameValidator(this.workoutService).checkWorkoutName],
        description: [workoutDescription],
     });
 

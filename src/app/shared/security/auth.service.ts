@@ -72,13 +72,14 @@ export class AuthService {
               this.authInfo$.next(authInfo);
               subject.next(res);
               subject.complete();
-            }
+            } 
           }
         )
         
       },
       err => {
-        this.authInfo$.error(err);
+        
+        // this.authInfo$.error(err);
         subject.error(err);
         subject.complete();
       });

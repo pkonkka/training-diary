@@ -1,4 +1,5 @@
 
+import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { AngularFireDatabase } from 'angularfire2';
@@ -26,12 +27,13 @@ import { Workout } from '../shared/model/workout';
 
 
 
-
+@Injectable()
 // ===================================================================
 export class WorkoutNameValidator {
 
     private workout: Workout = null;
     private test: string = 'testing';
+    private t: WorkoutService;
 
 
     // ----------------------------------------------------
@@ -39,42 +41,43 @@ export class WorkoutNameValidator {
 
         console.log('constructor: ', workoutService);
         console.log(this.test);
-
+        this.check(workoutService);
+        this.t = workoutService;
     }
 
-    private check() {
-
+    private check(workoutService: WorkoutService) {
+        console.log('workoutService.....: ', workoutService);
+        console.log('t---:', this.t);
     }
 
     // ----------------------------------------------------
-    // checkWorkoutName(ctrl: FormControl) {
-        checkWorkoutName() {
+    checkWorkoutName(ctrl: FormControl) {
 
         console.log('checkWorkoutName...');
         // return this.checkName(ctrl.value, this.workoutService);
 
         const valid = false;
 
-        console.log('workout service >>>: ', this.workoutService);
+        // console.log('workout service >>>: ', this.workoutService);
         console.log(this.test);
 
 
         // console.log('checking name...', ctrl.value);
         // let url = generateUrl(ctrl.value);
-        let url = 'total-body-23A';
-        this.workoutService.findWorkoutByUrl(url)
-             .do(console.log)
-             .subscribe(
-                 workout => this.workout = workout
-             );
+        // let url = 'total-body-23A';
+        // this.workoutService.findWorkoutByUrl(url)
+        //      .do(console.log)
+        //      .subscribe(
+        //          workout => this.workout = workout
+        //      );
 
-        if (this.workout !== null) { console.log('jee'); }
+        // if (this.workout !== null) { console.log('jee'); }
 
-        return valid ? null : {
-            checkName: {
-                valid: false
-            }
-        };
+        // return valid ? null : {
+        //     checkName: {
+        //         valid: false
+        //     }
+        // };
 
 
         // return null;

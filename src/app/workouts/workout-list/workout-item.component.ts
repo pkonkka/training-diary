@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Workout } from '../../shared/model/workout';
 import * as moment from 'moment';
@@ -8,21 +8,13 @@ import * as moment from 'moment';
   templateUrl: './workout-item.component.html',
   styleUrls: ['./workout-item.component.css']
 })
-export class WorkoutItemComponent implements OnInit {
+export class WorkoutItemComponent {
   @Input() workout: Workout;
   @Input() workoutId: number;
 
-  modAt: string;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
   // -----------------------------------------------------------
-  toDate(timestamp: string) {
-    return moment(timestamp);
+  toDate() {
+    return moment(this.workout.modifiedAt).format('DD.MM.YYYY');
   }
 
 }
