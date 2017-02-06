@@ -17,7 +17,7 @@ h3, label, p {
 }
 
 .app-login {
-    background-image: url('../assets/StockSnap_EHS7NJY7KT.jpg');
+    background-image: url('../assets/background1.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     /*background: radial-gradient(circle, black, white);*/
@@ -27,5 +27,6 @@ h3, label, p {
     /*background: url(sweettexture.jpg) blue;*/
 
 
-    margin: 50px;
+    /*margin: 50px;*/
+    margin-top: 50px;
 }
