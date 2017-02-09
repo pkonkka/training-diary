@@ -1,108 +1,178 @@
 
-import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Directive, forwardRef } from '@angular/core';
+import { FormControl, NG_VALIDATORS } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { AngularFireDatabase } from 'angularfire2';
-
 
 import { generateUrl } from '../shared/space-to-dash';
 import { WorkoutService } from '../shared/model/workout.service';
 import { Workout } from '../shared/model/workout';
 
 
-// export function validateName(ctrl: FormControl) {
-    
-//     const valid = false;
-    
-//     console.log(ctrl.value);
+function validateWorkoutName(workoutService: WorkoutService) {
+    const valid = false;
+
+    // console.log('validateWorkoutName: ', workouts);
+
+    return (c: FormControl) => {
+        return c.value === 'AA' ? null : {
+            validateWorkoutName: {
+                valid: false
+            }
+        }
+    }
+}
 
 
-//     return valid ? null : {
-//         validateName: {
-//             valid: false
-//         }
-//     };
 
-// }
-
-
-
-@Injectable()
 // ===================================================================
 export class WorkoutNameValidator {
 
-    private workout: Workout = null;
-    private test: string = 'testing';
-    private t: WorkoutService;
-
+    validator: Function;
+    allWorkouts: Workout[];
 
     // ----------------------------------------------------
     constructor(private workoutService: WorkoutService) {
+        console.log('validator constructor');
 
-        console.log('constructor: ', workoutService);
-        console.log(this.test);
-        this.check(workoutService);
-        this.t = workoutService;
-    }
+        console.log(workoutService);
 
-    private check(workoutService: WorkoutService) {
-        console.log('workoutService.....: ', workoutService);
-        console.log('t---:', this.t);
+        // get all existing workouts
+        // workoutService.findAllWorkouts()
+        //     .subscribe(
+        //         workouts => this.allWorkouts = workouts
+        //     );
+
+
+        // this.validator = validateWorkoutName(this.allWorkouts);
+        this.validator = validateWorkoutName(workoutService);
+
     }
 
     // ----------------------------------------------------
-    checkWorkoutName(ctrl: FormControl) {
-
-        console.log('checkWorkoutName...');
-        // return this.checkName(ctrl.value, this.workoutService);
-
-        const valid = false;
-
-        // console.log('workout service >>>: ', this.workoutService);
-        console.log(this.test);
-
-
-        // console.log('checking name...', ctrl.value);
-        // let url = generateUrl(ctrl.value);
-        // let url = 'total-body-23A';
-        // this.workoutService.findWorkoutByUrl(url)
-        //      .do(console.log)
-        //      .subscribe(
-        //          workout => this.workout = workout
-        //      );
-
-        // if (this.workout !== null) { console.log('jee'); }
-
-        // return valid ? null : {
-        //     checkName: {
-        //         valid: false
-        //     }
-        // };
-
-
-        // return null;
-    }
-
-
-    // ----------------------------------------------------
-    // checkName(name: string, workoutService: WorkoutService) {
-
-    //     const valid = false;
-
-
-    //     console.log('checking name...', name);
-    //     console.log(workoutService);
-
-
-    //     return valid ? null : {
-    //         checkName: {
-    //             valid: false
-    //         }
-    //     };
-
-
-    // }   
-
+    validate(ctrl: FormControl) {
+        console.log('validate');
+        return this.validator(ctrl);
+    }    
 
 }
 
+
+export function validate2(ctrl: FormControl, workoutService: WorkoutService) {
+
+    const valid = false;
+    let found = false;
+    let a: Workout;
+    
+
+    workoutService.findWorkoutByUrl(generateUrl(ctrl.value))
+        .toPromise()
+        .then((workout) => console.log(workout.name));
+    
+    
+    // workoutSub.unsubscribe();
+    console.log('a >>>>: ',a);
+    return typeof a === 'undefined' ? null : {
+        validate2: {
+            valid: false
+        }
+    };
+
+        // return ctrl.value === 'AA' ? null : {
+        //     validate2: {
+        //         valid: false
+        //     }
+        // }
+
+    // return !found ? null : {
+    //     validate2: {
+    //         valid: false
+    //     }
+    // };
+    
+/*
+    console.log('ctrl value: ', ctrl.value);
+    console.log(workoutService);
+    // return false;
+    workoutService.findWorkoutByUrl(generateUrl(ctrl.value))
+        .do(
+            workout => { 
+                a = workout;
+                if ( typeof a !== 'undefined') {
+                    found = true;
+                    console.log('FOUND !!!');
+                    return { validate2: { valid: false }};
+    // return !found ? null : {
+    //     validate2: {
+    //         valid: false
+    //     }
+    // };
+                    
+                } else {
+                    console.log('NOT FOUND !!!');
+                    found = false;
+                    return null;
+    // return !found ? null : {
+    //     validate2: {
+    //         valid: false
+    //     }
+    // };
+                    
+                }
+            }
+        )
+        .subscribe();
+
+    // return !found ? null : {
+    //     validate2: {
+    //         valid: false
+    //     }
+    // };
+
+        // return ctrl.value === 'AA' ? null : {
+        //     validate2: {
+        //         valid: false
+        //     }
+        // };
+    */
+
+}
+
+    // this.workoutSub = this.workoutService.findAllWorkouts()
+    //   .subscribe( 
+    //     workouts => {
+    //       this.allWorkouts = this.filtered = workouts;
+    //       this.sortByTime();
+    //       this.pages = _.chunk(this.allWorkouts, 5);
+
+    //     }
+    //   );
+
+
+
+    // this.filtered = this.allWorkouts.filter(function (workout) {
+
+    //   let description = workout.description.toLowerCase();
+    //   let name = workout.name.toLowerCase();
+    //   search = search.toLowerCase();
+    //   let retval = name.includes(search) || description.includes(search);
+
+    //   return retval;
+    // });
+
+
+
+    export function validate3(ctrl: FormControl) {
+
+        const valid = false;
+
+        
+
+
+        return ctrl.value === 'AA' ? null : {
+            validate3: {
+                valid: false
+            }
+        }
+
+    }

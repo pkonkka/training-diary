@@ -8,7 +8,7 @@ import { WorkoutService } from '../../shared/model/workout.service';
 import { ValidationService } from '../../shared/validation.service';
 import { Workout } from '../../shared/model/workout';
 import { generateUrl } from '../../shared/space-to-dash';
-import { WorkoutNameValidator } from '../validate-workout-name';
+import { WorkoutNameValidator, validate3 } from '../validate-workout-name';
 
 @Component({
   selector: 'app-workout-edit',
@@ -23,6 +23,7 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   private isNew = true;
   private paramsSub: Subscription;
   private workoutSub: Subscription;
+  private foundWorkout: Workout;
 
   dirty = false;
 
@@ -80,6 +81,7 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
     newWorkout.url = generateUrl(newWorkout.name);
     
     if (this.isNew) {
+      // console.log('onSubmit: ', this.validateName());
       this.workoutService.createWorkout(newWorkout);
     } else {
       this.workoutService.updateWorkout(this.workout, newWorkout);
@@ -90,7 +92,7 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------
   onRemove() {
     this.workoutService.removeWorkout(this.workout);
-    this.navigateBack();
+    this.router.navigate(['/workouts']);
   }
 
 
@@ -110,6 +112,31 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   private navigateBack() {
     this.location.back();
   }
+
+  // ---------------------------------------------------------------------------------
+  validateName(): boolean {
+
+    this.workoutService.findWorkoutByUrl(generateUrl(this.workoutForm.value.name))
+      .subscribe(
+        workout => {
+          if (typeof workout !== 'undefined') {
+            return false;
+          } else {
+            return true;
+          }
+        },
+        error => console.log(error),
+        () => console.log('done')
+      );
+    
+
+    
+    return false;
+
+  }
+
+
+
 
   // ---------------------------------------------------------------------------------
   private initForm() {
@@ -133,11 +160,9 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
        workoutDescription = this.workout.description;
      }
 
+    //  let val = new WorkoutNameValidator(this.workoutService);
      this.workoutForm = this.formBuilder.group({
-      //  name: [workoutName, Validators.compose([Validators.required, Validators.maxLength(20), Validators.apply(validateName)])],
-      // name: [workoutName, validateName(name, this.workoutService)],
-      name: [workoutName, Validators.required],
-      // name: [workoutName, new WorkoutNameValidator(this.workoutService).checkWorkoutName],
+      name: [workoutName, Validators.required],      
        description: [workoutDescription],
     });
 

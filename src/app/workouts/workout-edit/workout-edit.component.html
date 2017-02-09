@@ -8,7 +8,7 @@
     <h3>Edit Workout</h3>
   </div>
 
-  <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="workoutForm" novalidate>
 
     <div class="form-group">
       <label for="name">Title</label>
@@ -21,9 +21,10 @@
         <div class="alert alert-danger" 
           *ngIf="workoutForm.controls.name?.dirty && workoutForm.controls.name?.errors?.required">field is mandatory
         </div>
-        <div class="alert alert-danger" 
-          *ngIf="workoutForm.controls.name?.dirty && workoutForm.controls.name?.errors?.validateName">error
-        </div>        
+        <div class="alert alert-danger" *ngIf="alreadyExists">
+          This workout name already exists.
+        </div>
+        
     </div>
           
     <div class="form-group">
@@ -40,7 +41,7 @@
 
     <div class="form-group">
       <div class="btn-group" role="group" aria-label="...">
-        <button type="submit" class="btn btn-primary" [disabled]="!workoutForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="!workoutForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button type="button" class="btn btn-danger" (click)="onRemove()"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
         <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
       </div>
