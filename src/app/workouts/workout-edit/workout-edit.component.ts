@@ -8,7 +8,7 @@ import { WorkoutService } from '../../shared/model/workout.service';
 import { ValidationService } from '../../shared/validation.service';
 import { Workout } from '../../shared/model/workout';
 import { generateUrl } from '../../shared/space-to-dash';
-import { WorkoutNameValidator, validate3 } from '../validate-workout-name';
+import { WorkoutNameValidator } from '../validate-workout-name';
 
 @Component({
   selector: 'app-workout-edit',
