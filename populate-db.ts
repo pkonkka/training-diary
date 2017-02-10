@@ -9,6 +9,7 @@ import { database, initializeApp } from 'firebase';
 import { firebaseConfig } from './src/environments/firebase.config';
 import { dbDataExercises, dbDataWorkouts, dbDataCategories, dbDataUsers } from './db-data';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 
 console.log('Initizalizing Firebase database ... ');
@@ -51,8 +52,10 @@ dbDataExercises.exercises.forEach(exercise =>  {
       name:       exercise.name,
       note:       exercise.note,
       url:        exercise.url,
-      createdAt:  _.now(),
-      modifiedAt: _.now()
+      // createdAt:  _.now(),
+      // modifiedAt: _.now()
+      createdAt:  moment().format(),
+      modifiedAt: moment().format()
     }).key);
 });
 
@@ -74,8 +77,10 @@ dbDataCategories.categories.forEach(category =>  {
   categoryKeys.push(categoriesRef.push({
       name:       category.name,
       url:        category.url,
-      createdAt:  _.now(),
-      modifiedAt: _.now()
+      createdAt:  moment().format(),
+      modifiedAt: moment().format()      
+      // createdAt:  _.now(),
+      // modifiedAt: _.now()
     }).key);
 
 
@@ -138,8 +143,10 @@ dbDataWorkouts.workouts.forEach( workout => {
       name:         workout.name,
       description:  workout.description,
       url:          workout.url,
-      createdAt:    _.now(),
-      modifiedAt:   _.now()
+      createdAt:  moment().format(),
+      modifiedAt: moment().format()      
+      // createdAt:    _.now(),
+      // modifiedAt:   _.now()
   }).key);
 
   let association5 = workoutsRef.child(workoutKeys[counter]);
