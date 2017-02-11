@@ -1,9 +1,11 @@
 
 <a [routerLink]="[workout.url]" [queryParams]="{name: workout.name}" class="list-group-item clearfix" routerLinkActive="active"> 
-  <div class="pull-left">
-    <h5 class="list-group-item-heading">{{workout?.name}}</h5>
-    <small class="list-group-item-text">{{toDate()}}</small>
-
+  <div class="list-group">
+    <a href="#" class="list-group-item-active">
+      <h5 class="list-group-item-heading">{{workout?.name}}</h5>
+      <p class="list-group-item-heading pull-right">{{toDate()}}</p>
+      <p class="list-group-item-text pull-left" style="float:left;">{{exerciseCount}} exercises</p>
+    </a>
     <!--<p class="list-group-item-text">{{workout?.description}}</p>-->
   </div>
 </a>
