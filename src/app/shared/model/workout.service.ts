@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
+import * as moment from 'moment';
 
 // import 'rxjs/add.operator/map';
 // import 'rxjs/add.operator/do';
@@ -80,16 +81,28 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------
     //  Get the exercise keys per workout url
     // -------------------------------------------------------------------------------------------------    
-    findExerciseKeysPerWorkoutUrl(workoutUrl: string,
-                                  query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+    // findExerciseKeysPerWorkoutUrl(workoutUrl: string,
+    //                               query: FirebaseListFactoryOpts = {}): Observable<string[]> {
 
-        return this.findWorkoutByUrl(workoutUrl)
-            // .do(val => console.log('workout', val))
+    //     return this.findWorkoutByUrl(workoutUrl)
+    //         .do(val => console.log('workout', val))
+    //         .filter(workout => !!workout)
+    //         .switchMap(workout => this.db.list(`${this.userUrl}/exercisesPerWorkout/${workout.$key}`, query))
+    //         .map( lspc => lspc.map(lpc => lpc.$key) );
+
+    // }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get the exercise keys per workout url
+    // -------------------------------------------------------------------------------------------------    
+    findExerciseKeysPerWorkoutUrl(
+        workoutUrl: string,
+        query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+            return this.findWorkoutByUrl(workoutUrl)
             .filter(workout => !!workout)
-            .switchMap(workout => this.db.list(`${this.userUrl}/exercisesPerWorkout/${workout.$key}`, query))
-            .map( lspc => lspc.map(lpc => lpc.$key) );
-
-    }
+            .switchMap(workout => this.db.list(`${this.workoutUrl}/${workout.$key}/exercises`, query))
+            .map(lspc => lspc.map(lpc => lpc.$key));
+        }
 
     // -------------------------------------------------------------------------------------------------
     //  Get an exercise based an exercise key
@@ -101,12 +114,24 @@ export class WorkoutService {
 
     }
 
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get all exercises for a workout
+    // -------------------------------------------------------------------------------------------------    
+    // findAllExercisesForWorkout(workoutUrl: string): Observable<Exercise[]> {
+    //     return this.findExercisesForExerciseKeys(this.findExerciseKeysPerWorkoutUrl(workoutUrl));
+    // }
+
     // -------------------------------------------------------------------------------------------------
     //  Get all exercises for a workout
     // -------------------------------------------------------------------------------------------------    
     findAllExercisesForWorkout(workoutUrl: string): Observable<Exercise[]> {
+
         return this.findExercisesForExerciseKeys(this.findExerciseKeysPerWorkoutUrl(workoutUrl));
+
     }
+
+
 
 
     // -------------------------------------------------------------------------------------------------
@@ -168,7 +193,7 @@ export class WorkoutService {
     //  Create new workout item
     // -------------------------------------------------------------------------------------------------    
     createWorkout(data): firebase.Promise<any> {
-        data.modifiedAt = data.createdAt = _.now();
+        data.modifiedAt = data.createdAt = moment().format();
         return this.workouts$.push(data);
     }
     // createWorkout(data: {}): Observable<Workout> {
@@ -193,7 +218,7 @@ export class WorkoutService {
     //  Update a workout
     // -------------------------------------------------------------------------------------------------    
     updateWorkout(workout: Workout, changes: any): firebase.Promise<any> {
-        changes.modifiedAt = _.now();
+        changes.modifiedAt = moment().format();
         return this.workouts$.update(workout.$key, changes);
 
     }
