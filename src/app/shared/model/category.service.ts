@@ -1,10 +1,14 @@
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
+import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
+
 import { Observable } from 'rxjs/Rx';
 
 import * as _ from 'lodash';
 
 import { Category } from './category';
+import { Exercise } from './exercise';
+
 import { AuthService } from '../security/auth.service';
 import { AuthInfo } from '../security/auth-info';
 
@@ -51,6 +55,39 @@ export class CategoryService {
     })
     .map(results => results[0]);
   }
+
+  // -------------------------------------------------------------------------------------------------
+  //  Get the exercise keys per workout url
+  // -------------------------------------------------------------------------------------------------    
+  findExerciseKeysPerCategoryUrl(categoryUrl: string, query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+    return this.findCategoryByUrl(categoryUrl)
+      .filter(category => !!category)
+      .switchMap(category => this.db.list(`${this.categoryUrl}/${category.$key}/exercises`, query))
+      .map(lspc => lspc.map(lpc => lpc.$key));
+  }
+
+
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get all exercises for a workout
+    // -------------------------------------------------------------------------------------------------    
+    findAllExercisesForCategory(categoryUrl: string): Observable<Exercise[]> {
+
+        return this.findExercisesForExerciseKeys(this.findExerciseKeysPerCategoryUrl(categoryUrl));
+
+    }
+
+
+    // -------------------------------------------------------------------------------------------------
+    //  Get an exercise based an exercise key
+    // -------------------------------------------------------------------------------------------------    
+    findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
+        return exerciseKeys$
+            .map(lspc => lspc.map(exerciseKey => this.db.object(this.userUrl + 'exercises/' + exerciseKey)) )
+            .flatMap(fbojs => Observable.combineLatest(fbojs) );
+
+    }
+
 
   // -------------------------------------------------------------------------------------------------
   //  Create new category item
