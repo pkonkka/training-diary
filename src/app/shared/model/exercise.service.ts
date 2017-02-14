@@ -3,12 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
+import * as moment from 'moment';
 
 
 import { Category } from './category';
 import { Exercise } from './exercise';
+import { Workout } from './workout';
 
+import { CategoryService } from './category.service';
+import { WorkoutService } from './workout.service';
+ 
 import { AuthService } from '../security/auth.service';
 import { AuthInfo } from '../security/auth-info';
 
@@ -21,7 +26,11 @@ export class ExerciseService {
     private exerciseUrl;
 
     // -------------------------------------------------------------------------------------------------
-    constructor(private db: AngularFireDatabase, private authService: AuthService) {
+    constructor(
+        private db: AngularFireDatabase, 
+        private authService: AuthService,
+        private categoryService: CategoryService,
+        private workoutService: WorkoutService) {
 
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
         this.userUrl = 'users/' + this.authInfo.$uid + '/';
@@ -35,9 +44,6 @@ export class ExerciseService {
     //  Get all exercises
     // -------------------------------------------------------------------------------------------------    
     findAllExercises(): Observable<Exercise[]> {
-        // return this.db.list('exercises').map(Exercise.fromJsonArray);
-
-        // this.exercises$ = this.db.list('exercises');
         return this.exercises$.map(Exercise.fromJsonArray);
     }
 
@@ -56,54 +62,75 @@ export class ExerciseService {
     }
 
 
+
     // -------------------------------------------------------------------------------------------------
-    // Find an category by category url
+    // Find all categories for an exercise
     // -------------------------------------------------------------------------------------------------
-    findCategoryByUrl(categoryUrl: string): Observable<Category> {
-        return this.db.list(this.userUrl + 'categories', {
-            query: {
-                orderByChild: 'url',
-                equalTo: categoryUrl
-            }
-        })
-        .map(results => results[0]);
+    findAllCategoriesForExercise(exerciseUrl: string): Observable<Category[]> {
+
+        return this.findCategoriesForCategoryKeys(this.findCategoryKeysPerExerciseUrl(exerciseUrl));
     }
 
-
     // -------------------------------------------------------------------------------------------------
-    findAllExercisesForCategory(categoryUrl: string): Observable<Exercise[]> {
-        return this.findExercisesForExerciseKeys(this.findExerciseKeysPerCategoryUrl(categoryUrl));
+    // Find all workouts for an exercise
+    // -------------------------------------------------------------------------------------------------
+    findAllWorkoutsForExercise(exerciseUrl: string): Observable<Workout[]>{
+        return this.findWorkoutsForWorkoutKeys(this.findWorkoutKeysPerExerciseUrl(exerciseUrl));
     }
 
-
-
     // -------------------------------------------------------------------------------------------------
-    findExerciseKeysPerCategoryUrl(categoryUrl: string,
+    // Find all category keys for an exercise
+    // -------------------------------------------------------------------------------------------------
+    findCategoryKeysPerExerciseUrl(exerciseUrl: string,
                                    query: FirebaseListFactoryOpts = {}): Observable<string[]> {
 
-        return this.findCategoryByUrl(categoryUrl)
-            .filter(category => !!category)
-            .switchMap(category => this.db.list(`${this.userUrl}/exercisesPerCategory/${category.$key}`, query))
-            .map( lspc => lspc.map(lpc => lpc.$key) );
+        return this.findExerciseByUrl(exerciseUrl)
+            .filter(exercise => !!exercise)
+            .switchMap(exercise => this.db.list(`${this.exerciseUrl}/${exercise.$key}/categories`, query))
+            .map( lspc => lspc.map(lpc => lpc.$key))
+            .do(console.log);
+
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // Find all workout keys for an exercise
+    // -------------------------------------------------------------------------------------------------
+    findWorkoutKeysPerExerciseUrl(exerciseUrl: string,
+                                   query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+
+        return this.findExerciseByUrl(exerciseUrl)
+            .filter(exercise => !!exercise)
+            .switchMap(exercise => this.db.list(`${this.exerciseUrl}/${exercise.$key}/workouts`, query)) 
+            .map( lspc => lspc.map(lpc => lpc.$key))
+            .do(console.log);
 
     }
 
 
+    // -------------------------------------------------------------------------------------------------
+    findCategoriesForCategoryKeys(categoryKeys$: Observable<string[]>): Observable<Category[]> {
+        console.log('categoryKeys$: ', categoryKeys$);
+        return categoryKeys$
+            .map(lspc => lspc.map(categoryKey => this.db.object(this.userUrl + 'categories/' + categoryKey)))
+            .flatMap(fbojs => Observable.combineLatest(fbojs));
+
+    }
 
 
     // -------------------------------------------------------------------------------------------------
-    findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
-        return exerciseKeys$
-            .map(lspc => lspc.map(exerciseKey => this.db.object(this.exerciseUrl + exerciseKey)) )
+    findWorkoutsForWorkoutKeys(workoutKeys$: Observable<string[]>): Observable<Workout[]> {
+        return workoutKeys$
+            .map(lspc => lspc.map(workoutKey => this.db.object(this.userUrl + 'workouts/' + workoutKey)) )
             .flatMap(fbojs => Observable.combineLatest(fbojs) );
 
     }
+
 
     // -------------------------------------------------------------------------------------------------
     //  Create new exercise item
     // -------------------------------------------------------------------------------------------------    
     createExercise(data): firebase.Promise<any> {
-        data.modifiedAt = data.createdAt = _.now();
+        data.modifiedAt = data.createdAt = moment().format();
         return this.exercises$.push(data);
     }
 
@@ -127,7 +154,7 @@ export class ExerciseService {
     //  Update a exercise
     // -------------------------------------------------------------------------------------------------    
     updateExercise(exercise: Exercise, changes: any): firebase.Promise<any> {
-        changes.modifiedAt = _.now();
+        changes.modifiedAt = moment().format();
         return this.exercises$.update(exercise.$key, changes);
     }
 
