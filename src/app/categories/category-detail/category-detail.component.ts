@@ -52,10 +52,10 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.exerciseSub = this.exerciseService.findAllExercisesForCategory(this.categoryUrl)
-      .subscribe(
-        exercises => this.categoryExercises = exercises
-      );
+    // this.exerciseSub = this.exerciseService.findAllExercisesForCategory(this.categoryUrl)
+    //   .subscribe(
+    //     exercises => this.categoryExercises = exercises
+    //   );
 
   }
 
