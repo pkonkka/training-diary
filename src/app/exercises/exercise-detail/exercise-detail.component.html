@@ -1,6 +1,17 @@
 <div class="containter-fluid">
   <h3>{{exerciseName}}</h3>
 
+  <div class="category-list">
+    <p *ngFor="let category of relatedCategories" style="display: inline-block; margin-right: 10px;">
+        <a [routerLink]="['/categories/' + category.url]" [queryParams]="{name: category.name}"> {{ category.name }} </a>
+    </p>
+  </div>
+
+<!--<a [routerLink]="[category.url]" [queryParams]="{name: category.name}" class="list-group-item clearfix" routerLinkActive="active"> -->
+  <!--<a [routerLink]="['/exercises/' + exercise.url]" [queryParams]="{name: exercise.name}" class="list-group-item clearfix" routerLinkActive="active"> -->
+
+    
+
     <div class="btn-group" role="group" aria-label="...">
       <button type="button" class="btn btn-primary" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
       <button type="button"  class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>

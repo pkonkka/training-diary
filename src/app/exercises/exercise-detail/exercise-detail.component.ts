@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 
+import { Category } from '../../shared/model/category';
 import { Exercise } from '../../shared/model/exercise';
 import { ExerciseService } from '../../shared/model/exercise.service';
 
@@ -14,12 +15,16 @@ import { ExerciseService } from '../../shared/model/exercise.service';
 })
 export class ExerciseDetailComponent implements OnInit, OnDestroy {
 
+  relatedCategories:  Category[] = [];
+
   exercise:       Exercise;
   // exerciseForm: FormGroup;
-  exerciseName:  string = '';
-  exerciseUrl:    string;
+  exerciseName = '';
+  exerciseCategory: string[] = [];
+  exerciseUrl: string;
 
   paramsSub: Subscription;
+  exerciseSub: Subscription;
 
   // ---------------------------------------------------------------------------------
   constructor(
@@ -43,6 +48,19 @@ export class ExerciseDetailComponent implements OnInit, OnDestroy {
       }
     );
 
+    // get related categories
+    this.exerciseSub = this.exerciseService.findAllCategoriesForExercise(this.exerciseUrl)
+      .subscribe(
+        categories => {
+          this.relatedCategories = categories;
+          if (this.relatedCategories) {
+            for (let i = 0; i < this.relatedCategories.length; i++) {
+              console.log(this.relatedCategories[i].name);
+            }
+          }
+        }
+      );
+
   }
 
   // ---------------------------------------------------------------------------------
@@ -59,7 +77,7 @@ export class ExerciseDetailComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------
   ngOnDestroy() {
     this.paramsSub.unsubscribe();
+    this.exerciseSub.unsubscribe();
   }
-
 
 }
