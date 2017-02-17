@@ -2,5 +2,15 @@
 <a [routerLink]="['/exercises/' + exercise.url]" [queryParams]="{name: exercise.name}" class="list-group-item clearfix" routerLinkActive="active"> 
   <div class="pull-left">
     <h5 class="list-group-item-heading">{{exercise?.name}}</h5>
+    <p *ngFor="let category of relatedCategpries" class="list-group-item-text" style="display: block; margin-right: 10px;">
+      <a [routerLink]="['/categories/' + category.url]" [queryParams]="{name: category.name}"> {{ category.name }} </a>
+      </p>
   </div>
 </a>
+
+  <!--<div class="category-list">
+    <p *ngFor="let category of exercise?.categories" style="display: inline-block; margin-right: 10px;">
+        <a [routerLink]="['/categories/' + category.url]" [queryParams]="{name: category.name}"> {{ category.name }} </a>
+    </p>
+  </div>-->
+
