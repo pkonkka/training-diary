@@ -16,11 +16,13 @@ h3, label, p {
     color: #ff2118;
 }
 
+.login-page {
+    height:  1000px;
+    margin-top: 150px;
+}
+
 .app-login {
     background: linear-gradient(black, gray);
     margin: 50px;
-}
-
-.login-page {
-    height:  1000px;
+    position: fixed;    
 }
