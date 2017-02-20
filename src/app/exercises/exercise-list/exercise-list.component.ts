@@ -23,6 +23,10 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
 
   isAscSorted = false;
 
+  // dynamic css defaults
+  height: string;
+  // position = 'static';
+
   // ----------------------------------------------------------------------------------------------------------------------
   constructor(private exerciseService: ExerciseService ) { 
 
@@ -35,6 +39,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
         exercises => {
           this.allExercises = this.filtered = exercises;
           this.sortAlphaAsc();
+          this.height = (this.allExercises.length * 80).toString() + 'px';
         }
       );
   }

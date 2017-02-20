@@ -17,17 +17,11 @@ h3, label, p {
 }
 
 .app-register {
-    background-image: url('../assets/StockSnap_EHS7NJY7KT.jpg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    /*background: radial-gradient(circle, black, white);*/
     background: linear-gradient(black, gray);
-
-    /* fallback color */
-    /*background: url(sweettexture.jpg) blue;*/
-
-
     margin: 50px;
 }
 
+.register-page {
+    height: 1000px;
+}
 

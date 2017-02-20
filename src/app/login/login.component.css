@@ -17,16 +17,10 @@ h3, label, p {
 }
 
 .app-login {
-    background-image: url('../assets/background1.jpg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    /*background: radial-gradient(circle, black, white);*/
     background: linear-gradient(black, gray);
+    margin: 50px;
+}
 
-    /* fallback color */
-    /*background: url(sweettexture.jpg) blue;*/
-
-
-    /*margin: 50px;*/
-    margin-top: 50px;
+.login-page {
+    height:  1000px;
 }
