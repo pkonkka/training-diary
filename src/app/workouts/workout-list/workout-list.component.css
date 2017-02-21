@@ -1,7 +1,17 @@
-.button-new, .button-chevron {
+.btn {
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 h3 {
     color: lightgray;
 }
+
+ul {
+    height: 330px; 
+    width: 100%;
+    overflow: hidden; 
+    overflow-y: scroll;
+}
+
+

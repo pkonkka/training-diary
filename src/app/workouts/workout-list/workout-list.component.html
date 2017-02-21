@@ -1,5 +1,5 @@
 
-
+<div class="container-fluid" [ngStyle]="{ 'height': height}">
 <div class="row">
   <div class="col-xs-12">
     <h3>Workouts</h3>
@@ -20,7 +20,7 @@
   </div>
 </form>
 
-<div class="row">
+<div class="row workout-list">
   <div class="col-xs-12">
     <ul class="list-group" *ngIf="!fullList">
       <app-workout-item *ngFor="let workout of pages[pageIndex]; let i = index" [workout]="workout" [workoutId]="i"></app-workout-item>
@@ -31,14 +31,16 @@
   </div>
 </div>
 
-<div class="btn-group pull-left" role="group" aria-label="...">
+<!--<div class="btn-group pull-left" role="group" aria-label="...">
   <button *ngIf="fullList === false" type="button" class="btn btn-default" (click)="showAll()"><i class="fa fa-arrow-down" aria-hidden="true"></i></button> 
   <button *ngIf="fullList === true" type="button" class="btn btn-default" (click)="showOnePage()"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 </div>
 
 <div class="btn-group pull-right" role="group" aria-label="...">
-  <button type="button" class="btn btn-default" [disabled]="pageIndex === 0" (click)="previousPage()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> 
-  <button type="button" class="btn btn-default" [disabled]="pageIndex === pages.length-1" (click)="nextPage()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+  <button type="button" class="btn btn-default" [disabled]="pageIndex === 0 && fullList" (click)="previousPage()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button> 
+  <button type="button" class="btn btn-default" [disabled]="pageIndex === pages.length-1 && fullList" (click)="nextPage()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+</div>-->
+
 </div>
 
 

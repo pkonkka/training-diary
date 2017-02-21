@@ -27,6 +27,8 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
   workoutSub: Subscription;
   isAscSorted = false;
 
+  height = 5 * 150 + 'px';
+
   constructor(private workoutService: WorkoutService) { }
 
   // -----------------------------------------------------------------------------------------------------------------------
@@ -39,8 +41,9 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
           this.allWorkouts = this.filtered = workouts;
           this.sortByTime();
           this.pages = _.chunk(this.allWorkouts, 5);
-
-        }
+          this.height = this.allWorkouts.length * 150 + 'px';
+          this.showAll();
+          }
       );
 
   }
