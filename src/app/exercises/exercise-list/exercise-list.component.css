@@ -1,8 +1,16 @@
-.button-new, .button-chevron-right {
+.btn {
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 h3 {
     color: lightgray;
+}
+
+ul {
+    height: 400px; 
+    width: 100%;
+    overflow: hidden; 
+    overflow-y: scroll;
 }
 

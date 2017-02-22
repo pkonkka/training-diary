@@ -24,7 +24,8 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   isAscSorted = false;
 
   // dynamic css defaults
-  height: string;
+  height = 5 * 150 + 'px';
+  
   // position = 'static';
 
   // ----------------------------------------------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
         exercises => {
           this.allExercises = this.filtered = exercises;
           this.sortAlphaAsc();
-          this.height = (this.allExercises.length * 80).toString() + 'px';
+          this.height = this.allExercises.length * 150 + 'px';
         }
       );
   }
