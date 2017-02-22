@@ -18,6 +18,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
   categorySub: Subscription;
 
+  // default height
+  contentHeight = 5 * 150 + 'px';
+
+
   // --------------------------------------------------------------------------
   constructor(private categoryService: CategoryService) { }
 
@@ -28,6 +32,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         categories => { 
           this.allCategories = categories;
           this.allCategories =  _.sortBy(this.allCategories, [function(o) { return o.name; }]);
+          this.contentHeight = this.allCategories.length * 150 + 'px';
         }
       );
 
