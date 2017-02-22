@@ -13,7 +13,9 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="top-menu nav navbar-nav disable-link-styles">
+      <!--<ul class="top-menu nav navbar-nav disable-link-styles">-->
+      <ul class="top-menu nav navbar-nav">
+        
         <li routerLinkActive="menu-active"><a [routerLink]="['/workouts']" *ngIf="authInfo?.isLoggedIn()">Workouts</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/exercises']" *ngIf="authInfo?.isLoggedIn()">Exercises</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/categories']" *ngIf="authInfo?.isLoggedIn()">Categories</a></li>        

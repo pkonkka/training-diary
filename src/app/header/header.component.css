@@ -11,15 +11,20 @@
     color: lawngreen;
 }
 
+/*span, .icon-bar, li > a {
+    color: lightgray;
+}*/
+
 span, .icon-bar, li > a {
     color: lightgray;
 }
+
 
 li > a.menu-active {
     color: green;
     font-weight: bold;
 }
 
-.dropdown  {
+.dropdown-menu > li > a {
     color: black;
 }
