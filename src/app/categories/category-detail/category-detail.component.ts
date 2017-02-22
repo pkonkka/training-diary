@@ -25,6 +25,9 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   paramsSub:    Subscription;
   exerciseSub:  Subscription;
 
+  // default height
+  contentHeight = 5 * 150 + 'px';
+
   // -------------------------------------------------------------------------
   constructor(
     private route: ActivatedRoute, 
@@ -54,7 +57,12 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
 
     this.exerciseSub = this.categoryService.findAllExercisesForCategory(this.categoryUrl)
       .subscribe(
-        exercises => this.categoryExercises = exercises
+        exercises => {
+          this.categoryExercises = exercises;
+          if (this.categoryExercises.length * 150 + 'px' > this.contentHeight) {
+            this.contentHeight = this.categoryExercises.length * 150 + 'px';
+          }
+        }
       );
 
   }
