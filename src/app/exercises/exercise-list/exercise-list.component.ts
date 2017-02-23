@@ -22,12 +22,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   allCategories: Category[] = [];
 
   isAscSorted = false;
-
-  // dynamic css defaults
-  height = 5 * 150 + 'px';
   
-  // position = 'static';
-
   // ----------------------------------------------------------------------------------------------------------------------
   constructor(private exerciseService: ExerciseService ) { 
 
@@ -40,7 +35,6 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
         exercises => {
           this.allExercises = this.filtered = exercises;
           this.sortAlphaAsc();
-          this.height = this.allExercises.length * 150 + 'px';
         }
       );
   }
