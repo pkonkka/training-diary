@@ -1,16 +1,13 @@
-h1 {
-    color: red;
-}
 
 .container {
-    background-color:#35363B;
     width: 100%;      
-    min-height: 100%;
-    /*top: 200px;*/
-    /*position: relative;*/
+    min-height: 100%;    
 
-    /*height: 2000px;*/
-    /*position: fixed;*/
+    background-image: url('../assets/background3.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
 }
 
 
