@@ -87,7 +87,7 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
   // ------------------------------------------------------------------------------
   onRemove() {
     this.exerciseService.removeExercise(this.exercise);
-    this.navigateBack();
+    this.router.navigate(['/exercises']);
   }
 
   // ------------------------------------------------------------------------------

@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "users": {
+      "$user_id": {
+    		".read": "$user_id === auth.uid",
+    		".write": "$user_id === auth.uid",
+    		//".read": true,
+        //".write": true,  
+      	"workouts": {
+        	".indexOn": ["url"]    
+      	},
+      	"exercises": {
+        	".indexOn": ["url"]    
+      	},
+      	"categories": {
+        	".indexOn": ["url"]
+      	}
+      }
+    }
+  }
+}
