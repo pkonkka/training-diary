@@ -7,3 +7,6 @@ h3, p {
     color: lightgray;
 }
 
+.container-fluid {
+    height: 1000px;
+}
