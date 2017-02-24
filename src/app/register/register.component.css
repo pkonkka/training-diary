@@ -18,13 +18,11 @@ h3, label, p {
 
 .register-page {
     height: 1000px;
-    margin-top: 150px;
 }
 
 .app-register {
     background: linear-gradient(black, gray);
     margin: 50px;
-    position: fixed;
 }
 
 
