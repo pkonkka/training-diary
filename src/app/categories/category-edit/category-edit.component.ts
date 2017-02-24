@@ -80,7 +80,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   // ------------------------------------------------------------------------------
   onRemove() {
     this.categoryService.removeCategory(this.category);
-    this.navigateBack();
+    this.router.navigate(['/categories']);
   }
 
   // -----------------------------------------------------------------------------------------
