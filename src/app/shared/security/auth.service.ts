@@ -69,6 +69,7 @@ export class AuthService {
           auth => {
             if (auth) {
               authInfo = new AuthInfo(auth.uid, auth.auth.email);
+
               this.authInfo$.next(authInfo);
               subject.next(res);
               subject.complete();

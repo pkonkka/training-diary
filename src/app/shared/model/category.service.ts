@@ -24,12 +24,7 @@ export class CategoryService {
   // -------------------------------------------------------------------------------------------------
   constructor(private db: AngularFireDatabase, private authService: AuthService) {
 
-
     this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
-    this.userUrl = 'users/' + this.authInfo.$uid + '/';
-    this.categoryUrl = this.userUrl + 'categories';
-
-    this.categories$ = this.db.list(this.categoryUrl);
 
    }
 
@@ -38,6 +33,11 @@ export class CategoryService {
   //  Get all categories
   // -------------------------------------------------------------------------------------------------    
   findAllCategories(): Observable<Category[]> {
+
+    this.userUrl = 'users/' + this.authInfo.$uid + '/';
+    this.categoryUrl = this.userUrl + 'categories';
+
+    this.categories$ = this.db.list(this.categoryUrl);
 
     return this.categories$.map(Category.fromJsonArray);
 

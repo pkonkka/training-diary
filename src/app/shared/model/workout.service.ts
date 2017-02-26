@@ -30,11 +30,6 @@ export class WorkoutService {
 
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
 
-        this.userUrl = 'users/' + this.authInfo.$uid + '/';
-        this.workoutUrl = this.userUrl + 'workouts';
-
-        this.workouts$ = this.db.list(this.workoutUrl);
-
     }
 
     // -------------------------------------------------------------------------------------------------
@@ -42,9 +37,12 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------    
     findAllWorkouts(): Observable<Workout[]> {
 
-        return this.workouts$.map(Workout.fromJsonArray);
+        this.userUrl = 'users/' + this.authInfo.$uid + '/';
+        this.workoutUrl = this.userUrl + 'workouts';
 
-        // return this.db.list('workouts').map(Workout.fromJsonArray);
+        this.workouts$ = this.db.list(this.workoutUrl);
+
+        return this.workouts$.map(Workout.fromJsonArray);
 
     }
 
