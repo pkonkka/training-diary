@@ -22,6 +22,8 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   allCategories: Category[] = [];
 
   isAscSorted = false;
+
+  showSearch = false;
   
   // ----------------------------------------------------------------------------------------------------------------------
   constructor(private exerciseService: ExerciseService ) { 
@@ -54,6 +56,17 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
     });
 
   }
+
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  toggleSearch() {
+    if (this.showSearch) {
+      this.showSearch = false;
+    } else {
+      this.showSearch = true;
+    }
+  }
+  
 
   // ------------------------------------------------------------------------------------------------------------------------
   ngOnDestroy() {

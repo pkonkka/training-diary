@@ -27,20 +27,23 @@ export class WorkoutService {
 
     // -------------------------------------------------------------------------------------------------
     constructor(private db: AngularFireDatabase, private authService: AuthService) {
-
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
+        this.setPaths();
+    }
 
+    // -------------------------------------------------------------------------------------------------
+    //  Set paths
+    // -------------------------------------------------------------------------------------------------    
+    private setPaths() {
+        this.userUrl = 'users/' + this.authInfo.$uid + '/';
+        this.workoutUrl = this.userUrl + 'workouts';
+        this.workouts$ = this.db.list(this.workoutUrl);
     }
 
     // -------------------------------------------------------------------------------------------------
     //  Get all workouts from the database
     // -------------------------------------------------------------------------------------------------    
     findAllWorkouts(): Observable<Workout[]> {
-
-        this.userUrl = 'users/' + this.authInfo.$uid + '/';
-        this.workoutUrl = this.userUrl + 'workouts';
-
-        this.workouts$ = this.db.list(this.workoutUrl);
 
         return this.workouts$.map(Workout.fromJsonArray);
 
@@ -73,6 +76,7 @@ export class WorkoutService {
             }
         })
         .map(results => results[0])
+        .do(console.log)
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
@@ -97,9 +101,10 @@ export class WorkoutService {
         workoutUrl: string,
         query: FirebaseListFactoryOpts = {}): Observable<string[]> {
             return this.findWorkoutByUrl(workoutUrl)
-            .filter(workout => !!workout)
-            .switchMap(workout => this.db.list(`${this.workoutUrl}/${workout.$key}/exercises`, query))
-            .map(lspc => lspc.map(lpc => lpc.$key));
+                .filter(workout => !!workout)
+                .switchMap(workout => this.db.list(`${this.workoutUrl}/${workout.$key}/exercises`, query))
+                .map(lspc => lspc.map(lpc => lpc.$key));
+                // .do(console.log);
         }
 
     // -------------------------------------------------------------------------------------------------
@@ -108,7 +113,8 @@ export class WorkoutService {
     findExercisesForExerciseKeys(exerciseKeys$: Observable<string[]>): Observable<Exercise[]> {
         return exerciseKeys$
             .map(lspc => lspc.map(exerciseKey => this.db.object(this.userUrl + 'exercises/' + exerciseKey)) )
-            .flatMap(fbojs => Observable.combineLatest(fbojs) );
+            .flatMap(fbojs => Observable.combineLatest(fbojs));
+            // .do(console.log);
 
     }
 

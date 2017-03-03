@@ -33,7 +33,16 @@ export class ExerciseService {
         private workoutService: WorkoutService) {
 
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
-        
+        this.setPaths();
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    //  Set paths
+    // -------------------------------------------------------------------------------------------------    
+    private setPaths() {
+        this.userUrl = 'users/' + this.authInfo.$uid + '/';
+        this.exerciseUrl = this.userUrl + 'exercises';
+        this.exercises$ = this.db.list(this.exerciseUrl);
     }
 
     // -------------------------------------------------------------------------------------------------
@@ -41,13 +50,7 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------    
     findAllExercises(): Observable<Exercise[]> {
 
-        this.userUrl = 'users/' + this.authInfo.$uid + '/';
-        this.exerciseUrl = this.userUrl + 'exercises';
-
-        this.exercises$ = this.db.list(this.exerciseUrl);
-
         return this.exercises$.map(Exercise.fromJsonArray);
-
 
     }
 

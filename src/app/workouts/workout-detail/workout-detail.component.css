@@ -1,7 +1,9 @@
-.btn {
+/*.btn {
     margin-bottom: 10px;
     margin-right: 10px;
-}
+    background: transparent;
+    color: lightgray;
+}*/
 
 h3, p {
     color: lightgray;

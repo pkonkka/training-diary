@@ -23,10 +23,18 @@
     </div>
 
     <div class="form-group">
-      <div class="btn-group" role="group" aria-label="...">
-        <button type="submit" class="btn btn-primary" [disabled]="!categoryForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-        <button type="button" class="btn btn-danger" (click)="onRemove()"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
-        <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        
+        <div class="btn-group" role="group">        
+          <button type="submit" class="btn btn-default" [disabled]="!categoryForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" (click)="onRemove()"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+        </div>
+
       </div>          
     </div>
   </form>

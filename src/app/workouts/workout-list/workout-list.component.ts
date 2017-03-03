@@ -20,12 +20,11 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
   filtered: Workout[] = [];
   
   pages: Workout[][] = [];
-  pageIndex = 0;
   
-  fullList = false;
-
   workoutSub: Subscription;
   isAscSorted = false;
+
+  showSearch = false;
 
 
   constructor(private workoutService: WorkoutService) { }
@@ -40,36 +39,9 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
           this.allWorkouts = this.filtered = workouts;
           this.sortByTime();
           this.pages = _.chunk(this.allWorkouts, 5);
-          this.showAll();
           }
       );
 
-  }
-
-  // -----------------------------------------------------------------------------------------------------------------------
-  nextPage() {
-    if (this.pageIndex < this.pages.length) {
-      this.pageIndex++;
-    }
-  }
-
-
-  // -----------------------------------------------------------------------------------------------------------------------
-  previousPage() {
-    if (this.pageIndex > 0) {
-      this.pageIndex--;
-    }
-  }
-
-
-  // -----------------------------------------------------------------------------------------------------------------------
-  showAll() {
-    this.fullList = true;
-  }
-
-  // -----------------------------------------------------------------------------------------------------------------------
-  showOnePage() {
-    this.fullList = false;
   }
 
 
@@ -78,6 +50,16 @@ export class WorkoutListComponent implements OnInit, OnDestroy {
     this.filtered =  _.sortBy(this.filtered, [function(o) { return o.modifiedAt; }]);
     this.filtered = _.reverse(this.filtered);
     this.allWorkouts = this.filtered;
+  }
+
+
+  // -----------------------------------------------------------------------------------------------------------------------
+  toggleSearch() {
+    if (this.showSearch) {
+      this.showSearch = false;
+    } else {
+      this.showSearch = true;
+    }
   }
 
 

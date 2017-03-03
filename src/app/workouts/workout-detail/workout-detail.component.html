@@ -1,12 +1,20 @@
 
 <div class="container-fluid">
-  <h3>{{workoutName}}</h3>
+    <h3>{{workoutName}}</h3>
 
-  <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-success" (click)="onAddExercise()"><i class="fa fa-plus" aria-hidden="true"></i> New Exercise</button>                  
-    <button type="button" class="btn btn-primary" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>              
-    <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"> Cancel</i></button>
-  </div>
+    <div class="form-group">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" (click)="onAddExercise()"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs"> Add Exerc.</span></button>                  
+        </div>
+        <div class="btn-group" role="group">        
+          <button type="button" class="btn btn-default" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i><span class="hidden-xs"> Edit</span></button>              
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"><span class="hidden-xs"> Cancel</span></i></button>
+        </div>
+      </div>
+    </div>
     
   <ul class="list-group">
     <app-exercise-item *ngFor="let exercise of workoutExercises" [exercise]="exercise"></app-exercise-item>      

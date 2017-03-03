@@ -13,18 +13,11 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <!--<ul class="top-menu nav navbar-nav disable-link-styles">-->
       <ul class="top-menu nav navbar-nav">
-        
         <li routerLinkActive="menu-active"><a [routerLink]="['/workouts']" *ngIf="authInfo?.isLoggedIn()">Workouts</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/exercises']" *ngIf="authInfo?.isLoggedIn()">Exercises</a></li>
         <li routerLinkActive="menu-active"><a [routerLink]="['/categories']" *ngIf="authInfo?.isLoggedIn()">Categories</a></li>        
-        <!--<li routerLinkActive="menu-active"><a [routerLink]="['/login']" *ngIf="!authInfo?.isLoggedIn()">Login</a></li>        -->
-        <!--<li routerLinkActive="menu-active"><a [routerLink]="['/register']" *ngIf="!authInfo?.isLoggedIn()">Register</a></li>        -->
-        <!--<li routerLinkActive="menu-active"><a [routerLink]="['/logout']">Logout</a></li>        -->
-        
       </ul>
-
 
    <ul *ngIf="authInfo?.isLoggedIn()" class="nav navbar-nav navbar-right">
         <li class="dropdown">
@@ -35,19 +28,6 @@
         </li>
       </ul>
 
-      <!--<ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a [routerLink]="['/register']">Register</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Logout</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>-->
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
