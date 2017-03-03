@@ -9,11 +9,12 @@
 
   <div class="form-group">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-      </div>
       <div class="btn-group" role="group">      
-        <button type="button"  class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+        <button type="button"  class="btn btn-default" (click)="onCancel()"><i class="fa fa-arrow-left" aria-hidden="true"></i><span class="hidden-xs"> Cancel</span></button>
+      </div>
+
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i><span class="hidden-xs"> Edit</span></button>
       </div>
     </div>
   </div>

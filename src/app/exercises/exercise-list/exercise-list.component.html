@@ -4,15 +4,15 @@
   <div class="form-group">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default" [routerLink]="['new']"><i class="fa fa-plus" aria-hidden="true"></i> New</button>    
+        <button type="button" class="btn btn-default" [routerLink]="['new']"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs"> New</span></button>    
         <!--<button type="button" class="btn btn-default">Left</button>-->
       </div>
       <div class="btn-group" role="group">  
-        <button class="btn btn-default" (click)="toggleSearch()"><i class="fa fa-search" aria-hidden="true"></i> Search</button>    
+        <button class="btn btn-default" (click)="toggleSearch()"><i class="fa fa-search" aria-hidden="true"></i><span class="hidden-xs"> Search</span></button>    
       </div>      
       <div class="btn-group" role="group">
-        <button *ngIf="isAscSorted === false" type="button" class="btn btn-default" (click)="sortAlphaAsc()"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sort</button>    
-        <button *ngIf="isAscSorted === true" type="button" class="btn btn-default" (click)="sortAlphaDesc()"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Sort</button>            
+        <button *ngIf="isAscSorted === false" type="button" class="btn btn-default" (click)="sortAlphaAsc()"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><span class="hidden-xs"> Sort</span></button>    
+        <button *ngIf="isAscSorted === true" type="button" class="btn btn-default" (click)="sortAlphaDesc()"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><span class="hidden-xs"> Sort</span></button>            
         <!--<button type="button" class="btn btn-default">Middle</button>-->
       </div>
     </div>    

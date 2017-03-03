@@ -1,5 +1,6 @@
 <a [routerLink]="[category.url]" [queryParams]="{name: category.name}" class="list-group-item clearfix" routerLinkActive="active"> 
   <div class="pull-left">
     <h5 class="list-group-item-heading">{{category?.name}}</h5>
+    <p class="list-group-item-text pull-left" style="float:left;">{{exerciseCount}} exercises</p>    
   </div>
 </a>
