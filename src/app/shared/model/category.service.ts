@@ -61,6 +61,21 @@ export class CategoryService {
     .map(results => results[0]);
   }
 
+
+  // -------------------------------------------------------------------------------------------------
+  // Find a category by category key
+  // -------------------------------------------------------------------------------------------------
+  findCategoryByKey(categoryKey: string): Observable<Exercise> {
+
+      return this.db.list(this.categoryUrl, {
+          query: {
+              $key: categoryKey
+          }
+      })
+      .map(results => results[0]);
+  }
+  
+
   // -------------------------------------------------------------------------------------------------
   //  Get the exercise keys per workout url
   // -------------------------------------------------------------------------------------------------    

@@ -76,9 +76,23 @@ export class WorkoutService {
             }
         })
         .map(results => results[0])
-        .do(console.log)
         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
+
+
+    // -------------------------------------------------------------------------------------------------
+    // Find an workout by an workout key
+    // -------------------------------------------------------------------------------------------------
+    findWorkoutByKey(workoutKey: string): Observable<Exercise> {
+
+        return this.db.list(this.workoutUrl, {
+            query: {
+                $key: workoutKey
+            }
+        })
+        .map(results => results[0]);
+    }
+    
 
     // -------------------------------------------------------------------------------------------------
     //  Get the exercise keys per workout url

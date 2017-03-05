@@ -68,6 +68,18 @@ export class ExerciseService {
         .map(results => results[0]);
     }
 
+    // -------------------------------------------------------------------------------------------------
+    // Find an exercise by an excerise url
+    // -------------------------------------------------------------------------------------------------
+    findExerciseByKey(exerciseKey: string): Observable<Exercise> {
+
+        return this.db.list(this.exerciseUrl, {
+            query: {
+                $key: exerciseKey
+            }
+        })
+        .map(results => results[0]);
+    }
 
 
     // -------------------------------------------------------------------------------------------------
@@ -94,8 +106,7 @@ export class ExerciseService {
         return this.findExerciseByUrl(exerciseUrl)
             .filter(exercise => !!exercise)
             .switchMap(exercise => this.db.list(`${this.exerciseUrl}/${exercise.$key}/categories`, query))
-            .map( lspc => lspc.map(lpc => lpc.$key))
-            .do(console.log);
+            .map( lspc => lspc.map(lpc => lpc.$key));
 
     }
 
@@ -108,15 +119,13 @@ export class ExerciseService {
         return this.findExerciseByUrl(exerciseUrl)
             .filter(exercise => !!exercise)
             .switchMap(exercise => this.db.list(`${this.exerciseUrl}/${exercise.$key}/workouts`, query)) 
-            .map( lspc => lspc.map(lpc => lpc.$key))
-            .do(console.log);
+            .map( lspc => lspc.map(lpc => lpc.$key));
 
     }
 
 
     // -------------------------------------------------------------------------------------------------
     findCategoriesForCategoryKeys(categoryKeys$: Observable<string[]>): Observable<Category[]> {
-        console.log('categoryKeys$: ', categoryKeys$);
         return categoryKeys$
             .map(lspc => lspc.map(categoryKey => this.db.object(this.userUrl + 'categories/' + categoryKey)))
             .flatMap(fbojs => Observable.combineLatest(fbojs));
