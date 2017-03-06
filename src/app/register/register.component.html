@@ -1,42 +1,42 @@
 <div class="register-page">
-<div class="container-fluid app-register">
+  <div class="container-fluid app-register">
 
-  <h3>Register</h3>
+    <h3>Register</h3>
 
-  <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
-  
-    <div class="form-group">
-      <label>Email:</label>
-      <input class="form-control" name="email" formControlName="email">
+    <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+    
+      <div class="form-group">
+        <label>Email:</label>
+        <input class="form-control" name="email" formControlName="email">
+          
+        <div class="alert alert-danger" 
+          *ngIf="form.controls.email?.dirty && form.controls.email?.errors?.pattern">Email format is incorrect.
+        </div>                
         
-      <div class="alert alert-danger" 
-        *ngIf="form.controls.email?.dirty && form.controls.email?.errors?.pattern">Email format is incorrect.
-      </div>                
+      </div>
+
+      <div class="form-group">
+        <label>Password:</label>
+        <input class="form-control" name="password" formControlName="password" type="password">
+
+        <div class="alert alert-danger" 
+          *ngIf="form.controls.password?.dirty && form.controls.password?.errors?.minlength">Password must be at least 8 characters long.
+        </div>                
+        
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password:</label>
+        <input class="form-control" name="confirm" formControlName="confirm" type="password">
+      </div>
       
-    </div>
-
-    <div class="form-group">
-      <label>Password:</label>
-      <input class="form-control" name="password" formControlName="password" type="password">
-
-      <div class="alert alert-danger" 
-        *ngIf="form.controls.password?.dirty && form.controls.password?.errors?.minlength">Password must be at least 8 characters long.
-      </div>                
+      <p>I already have an account! <a [routerLink]="['/login']">Login</a> here.</p>
       
-    </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
+      </div>
 
-    <div class="form-group">
-      <label>Confirm Password:</label>
-      <input class="form-control" name="confirm" formControlName="confirm" type="password">
-    </div>
-    
-    <p>I already have an account! <a [routerLink]="['/login']">Login</a> here.</p>
-    
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
-    </div>
+    </form>
 
-  </form>
-
-</div>
+  </div>
 </div>
