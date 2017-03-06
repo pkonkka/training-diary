@@ -10,9 +10,6 @@ import * as moment from 'moment';
 import { Category } from './category';
 import { Exercise } from './exercise';
 import { Workout } from './workout';
-
-import { CategoryService } from './category.service';
-import { WorkoutService } from './workout.service';
  
 import { AuthService } from '../security/auth.service';
 import { AuthInfo } from '../security/auth-info';
@@ -28,9 +25,7 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------
     constructor(
         private db: AngularFireDatabase, 
-        private authService: AuthService,
-        private categoryService: CategoryService,
-        private workoutService: WorkoutService) {
+        private authService: AuthService) {
 
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
         this.setPaths();
@@ -53,7 +48,7 @@ export class ExerciseService {
         return this.exercises$.map(Exercise.fromJsonArray);
 
     }
-
+    
 
     // -------------------------------------------------------------------------------------------------
     // Find an exercise by an excerise url
@@ -67,6 +62,7 @@ export class ExerciseService {
         })
         .map(results => results[0]);
     }
+
 
     // -------------------------------------------------------------------------------------------------
     // Find an exercise by an excerise url
@@ -169,9 +165,10 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------
     //  Update a exercise
     // -------------------------------------------------------------------------------------------------    
-    updateExercise(exercise: Exercise, changes: any): firebase.Promise<any> {
+    updateExercise(exerciseKey: string, changes: any): firebase.Promise<any> {
         changes.modifiedAt = moment().format();
-        return this.exercises$.update(exercise.$key, changes);
+        console.log('updateExercise: ', exerciseKey, changes);
+        return this.exercises$.update(exerciseKey, changes);
     }
 
 }

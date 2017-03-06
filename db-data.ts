@@ -27,7 +27,7 @@ export const dbDataExercises = {
       'name': 'Bottoms Up Clean',
       'note': 'Awesome',  
       'url': 'bottoms-up-clean',
-      'workouts': [],
+      'workouts': [4],
       'categories': [4]      
     },  
     // 2          
@@ -51,7 +51,7 @@ export const dbDataExercises = {
       'name': 'Double Bent Row',
       'note': 'ewew',  
       'url': 'double-bent-row',
-      'workouts': [3,4],
+      'workouts': [5],
       'categories': [1]            
     },
     // 5    
@@ -59,7 +59,7 @@ export const dbDataExercises = {
       'name': 'Double Clean',
       'note': 'dddddd',  
       'url': 'double-clean',
-      'workouts': [4],
+      'workouts': [5],
       'categories': [4]      
     },  
     // 6                  
@@ -67,7 +67,7 @@ export const dbDataExercises = {
       'name': 'Double Deadlift',
       'note': 'aaaaa',  
       'url': 'double-deadlift',
-      'workouts': [2],
+      'workouts': [3],
       'categories': [2]           
     },  
     // 7                  
@@ -83,7 +83,7 @@ export const dbDataExercises = {
       'name': 'Double Jerk',
       'note': 'dlkllskdlskldklscmckx',  
       'url': 'double-jerk',
-      'workouts': [4],
+      'workouts': [5],
       'categories': [5]           
     },  
     // 9          
@@ -91,7 +91,7 @@ export const dbDataExercises = {
       'name': 'Double Swing',
       'note': 'roeior',  
       'url': 'double-swing',
-      'workouts': [0,2,3],
+      'workouts': [0, 3, 4],
       'categories': [2]      
     },
     // 10    
@@ -99,7 +99,7 @@ export const dbDataExercises = {
       'name': 'Double Thruster',
       'note': 'dlksd',  
       'url': 'double-thruster',
-      'workouts': [2,3],
+      'workouts': [3, 4],
       'categories': [3,5]            
     },
     // 11    
@@ -107,7 +107,7 @@ export const dbDataExercises = {
       'name': 'Goblet Squat',
       'note': 'dlskdlkls',  
       'url': 'goblet-squat',
-      'workouts': [1,4],
+      'workouts': [1, 5],
       'categories': [0,3]            
     },
     // 12    
@@ -123,7 +123,7 @@ export const dbDataExercises = {
       'name': 'Hand-To-Hand Swing',
       'note': 'reoitoie',  
       'url': 'hand-to-hand-swing',
-      'workouts': [4],
+      'workouts': [5],
       'categories': [2]           
     },   
     // 14         
@@ -131,7 +131,7 @@ export const dbDataExercises = {
       'name': 'Jump Squat',
       'note': 'jvjc', 
       'url': 'jump-squat',
-      'workouts': [2],
+      'workouts': [3],
       'categories': [3]           
     },   
     // 15                
@@ -139,7 +139,7 @@ export const dbDataExercises = {
       'name': 'Split Squat',
       'note': 'ret',  
       'url': 'split-squat',
-      'workouts': [2],
+      'workouts': [3],
       'categories': [3]           
     },   
     // 16                          
@@ -201,21 +201,21 @@ export const dbDataWorkouts = {
       'url': 'total-body-24A',
       'exercises': [7, 0, 3, 16]
     },
-    // 2        
+    // 3        
     {
       'name': 'Lower Body 4',
       'description': 'Description: ...',
       'url': 'lower-body-4',
       'exercises': [9, 6, 10, 15, 14]
     },
-    // 3        
+    // 4        
     {
       'name': 'Total Body 23A',
       'description': 'Description: ...',
       'url': 'total-body-23a',
       'exercises': [9, 4, 10, 1]
     },
-    // 4        
+    // 5        
     {
       'name': 'Total Body 23B',
       'description': 'Description: ...',

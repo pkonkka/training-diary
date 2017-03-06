@@ -1,5 +1,5 @@
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
 import { Observable } from 'rxjs/Rx';

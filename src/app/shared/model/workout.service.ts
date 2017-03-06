@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 import * as moment from 'moment';
 
 // import 'rxjs/add.operator/map';
@@ -13,6 +13,8 @@ import * as moment from 'moment';
 
 import { Workout } from './workout';
 import { Exercise } from './exercise';
+import { ExerciseService } from './exercise.service';
+
 import { AuthService } from '../security/auth.service';
 import { AuthInfo } from '../security/auth-info';
 
@@ -27,8 +29,10 @@ export class WorkoutService {
 
     // -------------------------------------------------------------------------------------------------
     constructor(private db: AngularFireDatabase, private authService: AuthService) {
+
         this.authService.authInfo$.subscribe(authInfo => this.authInfo = authInfo);
         this.setPaths();
+
     }
 
     // -------------------------------------------------------------------------------------------------
@@ -48,6 +52,7 @@ export class WorkoutService {
         return this.workouts$.map(Workout.fromJsonArray);
 
     }
+
 
     // -------------------------------------------------------------------------------------------------
     //  Get five first workouts, ordered by url
@@ -132,14 +137,6 @@ export class WorkoutService {
 
     }
 
-
-    // -------------------------------------------------------------------------------------------------
-    //  Get all exercises for a workout
-    // -------------------------------------------------------------------------------------------------    
-    // findAllExercisesForWorkout(workoutUrl: string): Observable<Exercise[]> {
-    //     return this.findExercisesForExerciseKeys(this.findExerciseKeysPerWorkoutUrl(workoutUrl));
-    // }
-
     // -------------------------------------------------------------------------------------------------
     //  Get all exercises for a workout
     // -------------------------------------------------------------------------------------------------    
@@ -148,9 +145,6 @@ export class WorkoutService {
         return this.findExercisesForExerciseKeys(this.findExerciseKeysPerWorkoutUrl(workoutUrl));
 
     }
-
-
-
 
     // -------------------------------------------------------------------------------------------------
     //  Get only the first page
@@ -214,23 +208,17 @@ export class WorkoutService {
         data.modifiedAt = data.createdAt = moment().format();
         return this.workouts$.push(data);
     }
-    // createWorkout(data: {}): Observable<Workout> {
-    //     return this.workouts$.push(data)
-    //         // .map((res: Response) => res.json())
-    //         .do(console.log)
-    //         .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-    // }
 
 
     // -------------------------------------------------------------------------------------------------
     //  Remove a workout from the database
     // -------------------------------------------------------------------------------------------------    
     removeWorkout(workout: Workout): firebase.Promise<any> {
-        // let item = this.db.list(`exercisesPerWorkout/${workout.$key}`);
-        // item.remove();
 
         return this.workouts$.remove(workout.$key);
+
     }
+
 
     // -------------------------------------------------------------------------------------------------
     //  Update a workout

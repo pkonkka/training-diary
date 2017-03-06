@@ -4,11 +4,14 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
+import { ExerciseService } from '../../shared/model/exercise.service';
 import { WorkoutService } from '../../shared/model/workout.service';
 import { ValidationService } from '../../shared/validation.service';
 import { Workout } from '../../shared/model/workout';
 import { generateUrl } from '../../shared/space-to-dash';
 import { WorkoutNameValidator } from '../validate-workout-name';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-workout-edit',
@@ -30,13 +33,12 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
 
   // ---------------------------------------------------------------------------------
   constructor(private route: ActivatedRoute,
+              private exerciseService: ExerciseService,
               private workoutService: WorkoutService,
               private validationService: ValidationService,
               private formBuilder: FormBuilder,
               private router: Router,
               private location: Location) { 
-
-
 
   }
 
@@ -91,8 +93,28 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
 
   // ---------------------------------------------------------------------------------
   onRemove() {
-    this.workoutService.removeWorkout(this.workout);
+
+    const wKey = this.workout.$key;
+    this.workoutService.findAllExercisesForWorkout(this.workout.url)
+      .map(exercises => exercises.map(exercise => {
+        delete exercise.workouts[wKey];
+
+        console.log('exercise.workouts: ', exercise.workouts);
+        
+        if (_.isEmpty(exercise.workouts)) { 
+          delete exercise.workouts;
+          this.exerciseService.updateExercise(exercise.$key, {'workouts': null});
+        } else {
+          this.exerciseService.updateExercise(exercise.$key, {'workouts': exercise.workouts});
+        }
+        
+      }))
+      .subscribe();
+
+    // this.workoutService.removeWorkout(this.workout);
     this.router.navigate(['/workouts']);
+
+
   }
 
 
@@ -100,7 +122,6 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   onCancel() {
     this.navigateBack();
   }
-
 
   // ---------------------------------------------------------------------------------
   ngOnDestroy() {

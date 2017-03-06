@@ -79,7 +79,7 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
     if (this.isNew) {
       this.exerciseService.createExercise(newExercise);
     } else {
-      this.exerciseService.updateExercise(this.exercise, newExercise);
+      this.exerciseService.updateExercise(this.exercise.$key, newExercise);
     }
     this.navigateBack();
   }
