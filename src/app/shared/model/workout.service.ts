@@ -215,7 +215,9 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------    
     removeWorkout(workout: Workout): firebase.Promise<any> {
 
+        console.log('I am here');
         return this.workouts$.remove(workout.$key);
+        // return;
 
     }
 

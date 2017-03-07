@@ -4,7 +4,6 @@
 //
 //
 // =======================================================================================
-
 import { database, initializeApp } from 'firebase';
 import { firebaseConfig } from './src/environments/firebase.config';
 import { dbDataExercises, dbDataWorkouts, dbDataCategories, dbDataUsers } from './db-data';
@@ -12,8 +11,8 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 
-console.log('Initizalizing Firebase database ... ');
 
+console.log('Initizalizing Firebase database ... ');
 initializeApp(firebaseConfig);
 
 
