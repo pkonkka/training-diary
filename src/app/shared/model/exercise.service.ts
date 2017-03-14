@@ -167,7 +167,6 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------    
     updateExercise(exerciseKey: string, changes: any): firebase.Promise<any> {
         changes.modifiedAt = moment().format();
-        console.log('updateExercise: ', exerciseKey, changes);
         return this.exercises$.update(exerciseKey, changes);
     }
 

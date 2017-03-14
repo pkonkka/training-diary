@@ -1,5 +1,9 @@
 
+import 'core-js/es6/reflect';
+import 'core-js/es7/reflect';
+
 import {AuthMethods, AuthProviders} from 'angularfire2';
+import { environment } from '../environments/environment';
 
 export const firebaseConfig = {
     apiKey: 'AIzaSyAGbsGG6sSFz4GkcHLIKHHJ7UUtLsEYNhs',

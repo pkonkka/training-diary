@@ -13,11 +13,8 @@ import { WorkoutNameValidator } from '../validate-workout-name';
 
 import * as _ from 'lodash';
 
-// import * as RSVP from 'rsvp';
-// declare var RSVP: any;
-const RSVP = require('rsvp');
+import { Observable } from 'rxjs/Rx';
 
-import * as Q from 'q';
 
 @Component({
   selector: 'app-workout-edit',
@@ -33,8 +30,6 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription;
   private workoutSub: Subscription;
   private foundWorkout: Workout;
-
-  private remove = false;
 
   dirty = false;
 
@@ -102,65 +97,24 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
 
 
 
-// ---------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------
+  // 1. Update related exercises and save updated exercises to the DB
+  // 2. remove workout
+  // ---------------------------------------------------------------------------------  
   onRemove() {
 
-    this.remove = true;
-    console.log('onRemove');
-
-    const wKey = this.workout.$key;
-    console.log('wKey: ', wKey);
-
-
-    const t = this.workoutService.findAllExercisesForWorkout(this.workout.url)    
+    const myPromise = this.workoutService.findAllExercisesForWorkout(this.workoutUrl)
       .map(exercises => exercises.map(exercise => {
-        // delete exercise.workouts[wKey];
-        exercise.workouts[wKey] = false;
-
-        console.log('exercise.workouts: ', exercise.workouts);
-
-          // this.exerciseService.updateExercise(exercise.$key, {'workouts': exercise.workouts});        
-        
+        exercise.workouts[this.workout.$key] = false;
+        this.exerciseService.updateExercise(exercise.$key, {'workouts': exercise.workouts});
       }))
+      .first()
       .toPromise();
-      // .subscribe();
 
-      console.log('t: ', t);
-
-   t.then(
-     function(value) {
-       console.log('resolved value: ', value);
-     },
-     function(reason) {
-      console.log('rejected reason: ', reason);
-     }
-   )   
-    
-    // this.workoutService.removeWorkout(this.workout);
-    this.router.navigate(['/workouts']);
-
-  }
-
-  // ---------------------------------------------------------------------------------
-  onRemove2() {
-
-    const wKey = this.workout.$key;
-    console.log('wKey: ', wKey);
-    
-    this.workoutService.findAllExercisesForWorkout(this.workout.url)    
-      .map(exercises => exercises.map(exercise => {
-        // delete exercise.workouts[wKey];
-        exercise.workouts[wKey] = false;
-
-        console.log('exercise.workouts: ', exercise.workouts);
-
-          // this.exerciseService.updateExercise(exercise.$key, {'workouts': exercise.workouts});        
-        
-      }))
-      .subscribe();
-    
-    // this.workoutService.removeWorkout(this.workout);    
-    this.router.navigate(['/workouts']);
+    myPromise.then(() => {
+      this.workoutService.removeWorkout(this.workout);
+      this.router.navigate(['/workouts']);
+    });
 
   }
 
@@ -173,9 +127,6 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------------------
   ngOnDestroy() {
 
-    console.log('OnDestroy');    
-    if (this.remove) { this.workoutService.removeWorkout(this.workout);}
-    
     this.paramsSub.unsubscribe();
     if (this.workoutSub) { this.workoutSub.unsubscribe(); }
   }

@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { firebaseConfig, authConfig} from "../environments/firebase.config";
+
 import { AngularFireModule} from "angularfire2/index";
 
 import 'rxjs/Rx';
