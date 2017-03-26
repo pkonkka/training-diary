@@ -37,8 +37,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
         exercises => {
           this.allExercises = this.filtered = exercises;
           this.sortAlphaAsc();
-        }
-      );
+        });
   }
 
   
@@ -46,11 +45,11 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   searchExercise(search: string) {
 
     this.filtered = this.allExercises.filter(function (exercise) {
-      let note = exercise.note.toLowerCase();
-      let name = exercise.name.toLowerCase();
+      const note = exercise.note.toLowerCase();
+      const name = exercise.name.toLowerCase();
 
       search = search.toLowerCase();
-      let retval = name.includes(search) || note.includes(search);
+      const retval = name.includes(search) || note.includes(search);
 
       return retval;
     });

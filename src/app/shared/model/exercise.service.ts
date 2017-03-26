@@ -89,7 +89,7 @@ export class ExerciseService {
     // -------------------------------------------------------------------------------------------------
     // Find all workouts for an exercise
     // -------------------------------------------------------------------------------------------------
-    findAllWorkoutsForExercise(exerciseUrl: string): Observable<Workout[]>{
+    findAllWorkoutsForExercise(exerciseUrl: string): Observable<Workout[]> {
         return this.findWorkoutsForWorkoutKeys(this.findWorkoutKeysPerExerciseUrl(exerciseUrl));
     }
 

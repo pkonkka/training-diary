@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { CategoryService } from '../../shared/model/category.service';
+import { ExerciseService } from '../../shared/model/exercise.service';
+
 import { Category } from '../../shared/model/category';
 import { generateUrl } from '../../shared/space-to-dash';
 
@@ -27,6 +29,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   // -----------------------------------------------------------------------------------------
   constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
+              private exerciseService: ExerciseService,
               private formBuilder: FormBuilder,
               private router: Router,
               private location: Location) { 
@@ -79,8 +82,26 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
 
   // ------------------------------------------------------------------------------
   onRemove() {
-    this.categoryService.removeCategory(this.category);
-    this.router.navigate(['/categories']);
+
+
+    const myPromise = this.categoryService.findAllExercisesForCategory(this.categoryUrl)
+      .map(exercises => exercises.map(exercise => {
+        // exercise.categories[this.category.$key] = false;
+        
+        // this.exerciseService.updateExercise(exercise.$key, { 'categories': exercise.categories});
+      }))
+      .first()
+      .toPromise();
+
+    myPromise.then(() => {
+      // this.categoryService.removeCategory(this.category);
+      console.log('removing category...');
+      this.router.navigate(['/categories']);
+    });
+
+
+
+
   }
 
   // -----------------------------------------------------------------------------------------

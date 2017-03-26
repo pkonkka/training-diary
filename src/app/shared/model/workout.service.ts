@@ -223,9 +223,9 @@ export class WorkoutService {
     // -------------------------------------------------------------------------------------------------
     //  Update a workout
     // -------------------------------------------------------------------------------------------------    
-    updateWorkout(workout: Workout, changes: any): firebase.Promise<any> {
+    updateWorkout(workoutKey: string, changes: any): firebase.Promise<any> {
         changes.modifiedAt = moment().format();
-        return this.workouts$.update(workout.$key, changes);
+        return this.workouts$.update(workoutKey, changes);
 
     }
 

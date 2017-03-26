@@ -1,5 +1,16 @@
 
-import { Exercise } from './exercise';
+import { Exercise, ExerciseKey } from './exercise';
+
+export class WorkoutKey {
+    constructor(
+        public id: string,
+        public status: boolean
+    )
+    {
+
+    }
+}
+
 
 export class Workout {
 

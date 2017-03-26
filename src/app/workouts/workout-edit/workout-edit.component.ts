@@ -13,8 +13,6 @@ import { WorkoutNameValidator } from '../validate-workout-name';
 
 import * as _ from 'lodash';
 
-import { Observable } from 'rxjs/Rx';
-
 
 @Component({
   selector: 'app-workout-edit',
@@ -89,13 +87,10 @@ export class WorkoutEditComponent implements OnInit, OnDestroy {
       // console.log('onSubmit: ', this.validateName());
       this.workoutService.createWorkout(newWorkout);
     } else {
-      this.workoutService.updateWorkout(this.workout, newWorkout);
+      this.workoutService.updateWorkout(this.workout.$key, newWorkout);
     }
     this.navigateBack();
   }
-
-
-
 
   // ---------------------------------------------------------------------------------
   // 1. Update related exercises and save updated exercises to the DB

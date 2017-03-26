@@ -5,8 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ExerciseService } from '../../shared/model/exercise.service';
+import { WorkoutService } from '../../shared/model/workout.service';
+
 import { Exercise } from '../../shared/model/exercise';
 import { generateUrl } from '../../shared/space-to-dash';
+
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-exercise-edit',
@@ -16,7 +21,7 @@ import { generateUrl } from '../../shared/space-to-dash';
 export class ExerciseEditComponent implements OnInit, OnDestroy {
   exerciseForm: FormGroup;
   private exerciseIndex: number;
-  private exercise: Exercise;
+  private exercise: Exercise = null;
   private isNew = true;
   
   private exerciseSub: Subscription;
@@ -28,25 +33,20 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------------------------
   constructor(private route: ActivatedRoute,
               private exerciseService: ExerciseService,
+              private workoutService: WorkoutService,
               private formBuilder: FormBuilder,
               private router: Router,
               private location: Location) { 
 
-
               }
-
-
-
 
   // ---------------------------------------------------------------------
   ngOnInit() {
-
 
     this.exerciseForm = this.formBuilder.group({
        name: [''],
        note: [''],
     });
-
 
     this.paramsSub = this.route.params.subscribe(
       params => {
@@ -74,7 +74,7 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
   // ------------------------------------------------------------------------------
   onSubmit() {
     const newExercise = this.exerciseForm.value;
-    newExercise.url = generateUrl(newExercise.name);    
+    newExercise.url = generateUrl(newExercise.name);
 
     if (this.isNew) {
       this.exerciseService.createExercise(newExercise);
@@ -85,9 +85,34 @@ export class ExerciseEditComponent implements OnInit, OnDestroy {
   }
 
   // ------------------------------------------------------------------------------
+  // 1. Update related workouts and save updated workouts to the DB
+  // 2. Update related categories and save updated categories to the DB  
+  // 3. remove exercise
+  // ---------------------------------------------------------------------------------  
   onRemove() {
-    this.exerciseService.removeExercise(this.exercise);
-    this.router.navigate(['/exercises']);
+
+    console.log('this.exercise: ', this.exercise);
+    console.log('this.exercise.key: ', this.exercise.$key);
+    this.exercise.workouts[9][0] = false;
+
+    const myPromise = this.exerciseService.findAllWorkoutsForExercise(this.exerciseUrl)
+      .map(workouts => workouts.map(workout => {
+        // workout.exercises[this.exercise.$key] = 'jee'
+        console.log('workout.exercises: ', workout.exercises);
+        console.log(this.exercise.$key, ' ', workout.exercises[this.exercise.$key]);
+        console.log('workout.exercises: ', workout.exercises);
+      }))
+      .first()
+      .toPromise();
+
+
+    myPromise.then(() => {
+      // this.exerciseService.removeExercise(this.exercise);
+      console.log('removing exercise....');
+      this.router.navigate(['/exercises']);
+    });
+
+
   }
 
   // ------------------------------------------------------------------------------
